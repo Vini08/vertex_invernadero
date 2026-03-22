@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="green_primary">#2ECC71</color>
+    <color name="green_dark">#27AE60</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <!-- Dark mode -->
+    <color name="colorBg">#0D1B2A</color>
+    <color name="colorCard">#1A2B3C</color>
+    <color name="colorItem">#243447</color>
+    <color name="colorTextPrimary">#E8F0FC</color>
+    <color name="colorTextSecondary">#7A90B0</color>
+    <color name="colorTextHint">#3D5068</color>
+    <color name="colorBorder">#243447</color>
+    <color name="colorNavBar">#1A2B3C</color>
+    <!-- Chips dark -->
+    <color name="chipOkBg">#1A3A28</color>
+    <color name="chipOkText">#4CD986</color>
+    <color name="chipWarnBg">#3A2800</color>
+    <color name="chipWarnText">#F5B041</color>
+    <color name="chipBadBg">#3A1212</color>
+    <color name="chipBadText">#F1948A</color>
+    <color name="chipInfoBg">#0D2148</color>
+    <color name="chipInfoText">#74B9FF</color>
+    <!-- Fixed -->
+    <color name="statusOnline">#2ECC71</color>
+    <color name="statusWarn">#F39C12</color>
+    <color name="statusError">#E74C3C</color>
+</resources>

@@ -1,0 +1,270 @@
+[
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/mipmap-xxxhdpi_ic_launcher.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/mipmap-xxxhdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/layout_fragment_pump.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/layout/fragment_pump.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_ic_fan.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/ic_fan.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_ic_history.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/ic_history.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_ic_soil.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/ic_soil.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_bg_icon_btn.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/bg_icon_btn.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_ic_humidity.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/ic_humidity.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/mipmap-mdpi_ic_launcher.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/mipmap-mdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/mipmap-mdpi_ic_launcher_round.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/mipmap-mdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_progress_green.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/progress_green.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable-night_progress_green.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable-night/progress_green.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable-night_bg_icon_btn.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable-night/bg_icon_btn.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_bg_hero_off.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/bg_hero_off.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_ic_thermometer.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/ic_thermometer.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/mipmap-xhdpi_ic_launcher.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/mipmap-xhdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_ic_sun.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/ic_sun.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_bg_hero_on.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/bg_hero_on.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/mipmap-xxxhdpi_ic_launcher_round.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/mipmap-xxxhdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable-night_bg_alert_info.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable-night/bg_alert_info.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_bg_alert_info.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/bg_alert_info.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable-night_bg_alert_warn.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable-night/bg_alert_warn.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_bg_alert_warn.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/bg_alert_warn.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_bg_dot_warn.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/bg_dot_warn.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable-night_bg_stat_box.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable-night/bg_stat_box.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_bg_chip_bad.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/bg_chip_bad.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_bg_alert_ok.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/bg_alert_ok.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/mipmap-xhdpi_ic_launcher_round.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/mipmap-xhdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_bg_schedule_time.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/bg_schedule_time.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_bg_chip_green.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/bg_chip_green.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/mipmap-hdpi_ic_launcher.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/mipmap-hdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable-night_bg_chip_green.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable-night/bg_chip_green.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_ic_alerts.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/ic_alerts.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable-night_bg_alert_ok.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable-night/bg_alert_ok.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable-night_bg_hero_on.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable-night/bg_hero_on.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_bg_chip_warn.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/bg_chip_warn.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_ic_check.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/ic_check.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/layout_fragment_dashboard.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/layout/fragment_dashboard.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable-night_bg_chip_warn.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable-night/bg_chip_warn.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/layout_fragment_config.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/layout/fragment_config.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable-night_bg_dot_green.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable-night/bg_dot_green.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_bg_alert_crit.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/bg_alert_crit.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable-night_bg_chip_ok.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable-night/bg_chip_ok.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/color_bottom_nav_selector.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/color/bottom_nav_selector.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_ic_sun_small.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/ic_sun_small.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_ic_moon.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/ic_moon.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/color_switch_track_selector.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/color/switch_track_selector.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/menu_bottom_nav_menu.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/menu/bottom_nav_menu.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable-night_bg_schedule_time.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable-night/bg_schedule_time.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/layout_fragment_alerts.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/layout/fragment_alerts.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable-night_bg_chip_bad.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable-night/bg_chip_bad.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_bg_stat_box.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/bg_stat_box.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_bg_chip_ok.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/bg_chip_ok.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/mipmap-xxhdpi_ic_launcher_round.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/mipmap-xxhdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_bg_dot_green.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/bg_dot_green.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable-night_bg_hero_off.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable-night/bg_hero_off.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_ic_pump.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/ic_pump.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_ic_settings.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/ic_settings.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/layout_fragment_history.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/layout/fragment_history.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable-night_bg_alert_crit.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable-night/bg_alert_crit.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_ic_dashboard.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/ic_dashboard.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/layout_activity_main.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_ic_heater.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/ic_heater.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/mipmap-xxhdpi_ic_launcher.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/mipmap-xxhdpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/mipmap-hdpi_ic_launcher_round.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/mipmap-hdpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable_bg_chip_info.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable/bg_chip_info.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable-night_bg_dot_warn.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable-night/bg_dot_warn.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-merged_res-41:/drawable-night_bg_chip_info.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/drawable-night/bg_chip_info.xml"
+    }
+]

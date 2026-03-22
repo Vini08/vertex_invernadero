@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.AgroControl" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/green_primary</item>
+        <item name="colorPrimaryDark">@color/green_dark</item>
+        <item name="colorAccent">@color/green_primary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/colorBg</item>
+        <item name="android:statusBarColor">@color/colorBg</item>
+        <item name="android:navigationBarColor">@color/colorNavBar</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+    <style name="AgroSwitch" parent="Widget.MaterialComponents.CompoundButton.Switch">
+        <item name="thumbTint">@color/white</item>
+        <item name="trackTint">@color/switch_track_selector</item>
+    </style>
+</resources>

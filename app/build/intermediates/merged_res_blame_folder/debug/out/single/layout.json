@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "com.agrocontrol.app-mergeDebugResources-40:/layout/activity_main.xml",
+        "source": "com.agrocontrol.app-main-43:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-mergeDebugResources-40:/layout/fragment_config.xml",
+        "source": "com.agrocontrol.app-main-43:/layout/fragment_config.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-mergeDebugResources-40:/layout/fragment_pump.xml",
+        "source": "com.agrocontrol.app-main-43:/layout/fragment_pump.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-mergeDebugResources-40:/layout/fragment_dashboard.xml",
+        "source": "com.agrocontrol.app-main-43:/layout/fragment_dashboard.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-mergeDebugResources-40:/layout/fragment_alerts.xml",
+        "source": "com.agrocontrol.app-main-43:/layout/fragment_alerts.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-mergeDebugResources-40:/layout/fragment_history.xml",
+        "source": "com.agrocontrol.app-main-43:/layout/fragment_history.xml"
+    }
+]
