@@ -4,20 +4,83 @@ package com.agrocontrol.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
+import androidx.viewbinding.ViewBindings;
 import com.agrocontrol.app.R;
+import com.google.android.material.button.MaterialButton;
 import java.lang.NullPointerException;
 import java.lang.Override;
+import java.lang.String;
 
 public final class FragmentConfigBinding implements ViewBinding {
   @NonNull
   private final ScrollView rootView;
 
-  private FragmentConfigBinding(@NonNull ScrollView rootView) {
+  @NonNull
+  public final MaterialButton btnSaveConfig;
+
+  @NonNull
+  public final Button btnTestMqtt;
+
+  @NonNull
+  public final EditText etFarmName;
+
+  @NonNull
+  public final EditText etInterval;
+
+  @NonNull
+  public final EditText etMqttHost;
+
+  @NonNull
+  public final EditText etMqttPass;
+
+  @NonNull
+  public final EditText etMqttPort;
+
+  @NonNull
+  public final EditText etMqttUser;
+
+  @NonNull
+  public final EditText etTankCapacity;
+
+  @NonNull
+  public final EditText etTopicPump;
+
+  @NonNull
+  public final EditText etTopicSensors;
+
+  @NonNull
+  public final EditText etTopicStatus;
+
+  @NonNull
+  public final TextView tvConnStatus;
+
+  private FragmentConfigBinding(@NonNull ScrollView rootView, @NonNull MaterialButton btnSaveConfig,
+      @NonNull Button btnTestMqtt, @NonNull EditText etFarmName, @NonNull EditText etInterval,
+      @NonNull EditText etMqttHost, @NonNull EditText etMqttPass, @NonNull EditText etMqttPort,
+      @NonNull EditText etMqttUser, @NonNull EditText etTankCapacity, @NonNull EditText etTopicPump,
+      @NonNull EditText etTopicSensors, @NonNull EditText etTopicStatus,
+      @NonNull TextView tvConnStatus) {
     this.rootView = rootView;
+    this.btnSaveConfig = btnSaveConfig;
+    this.btnTestMqtt = btnTestMqtt;
+    this.etFarmName = etFarmName;
+    this.etInterval = etInterval;
+    this.etMqttHost = etMqttHost;
+    this.etMqttPass = etMqttPass;
+    this.etMqttPort = etMqttPort;
+    this.etMqttUser = etMqttUser;
+    this.etTankCapacity = etTankCapacity;
+    this.etTopicPump = etTopicPump;
+    this.etTopicSensors = etTopicSensors;
+    this.etTopicStatus = etTopicStatus;
+    this.tvConnStatus = tvConnStatus;
   }
 
   @Override
@@ -43,10 +106,93 @@ public final class FragmentConfigBinding implements ViewBinding {
 
   @NonNull
   public static FragmentConfigBinding bind(@NonNull View rootView) {
-    if (rootView == null) {
-      throw new NullPointerException("rootView");
-    }
+    // The body of this method is generated in a way you would not otherwise write.
+    // This is done to optimize the compiled bytecode for size and performance.
+    int id;
+    missingId: {
+      id = R.id.btn_save_config;
+      MaterialButton btnSaveConfig = ViewBindings.findChildViewById(rootView, id);
+      if (btnSaveConfig == null) {
+        break missingId;
+      }
 
-    return new FragmentConfigBinding((ScrollView) rootView);
+      id = R.id.btn_test_mqtt;
+      Button btnTestMqtt = ViewBindings.findChildViewById(rootView, id);
+      if (btnTestMqtt == null) {
+        break missingId;
+      }
+
+      id = R.id.et_farm_name;
+      EditText etFarmName = ViewBindings.findChildViewById(rootView, id);
+      if (etFarmName == null) {
+        break missingId;
+      }
+
+      id = R.id.et_interval;
+      EditText etInterval = ViewBindings.findChildViewById(rootView, id);
+      if (etInterval == null) {
+        break missingId;
+      }
+
+      id = R.id.et_mqtt_host;
+      EditText etMqttHost = ViewBindings.findChildViewById(rootView, id);
+      if (etMqttHost == null) {
+        break missingId;
+      }
+
+      id = R.id.et_mqtt_pass;
+      EditText etMqttPass = ViewBindings.findChildViewById(rootView, id);
+      if (etMqttPass == null) {
+        break missingId;
+      }
+
+      id = R.id.et_mqtt_port;
+      EditText etMqttPort = ViewBindings.findChildViewById(rootView, id);
+      if (etMqttPort == null) {
+        break missingId;
+      }
+
+      id = R.id.et_mqtt_user;
+      EditText etMqttUser = ViewBindings.findChildViewById(rootView, id);
+      if (etMqttUser == null) {
+        break missingId;
+      }
+
+      id = R.id.et_tank_capacity;
+      EditText etTankCapacity = ViewBindings.findChildViewById(rootView, id);
+      if (etTankCapacity == null) {
+        break missingId;
+      }
+
+      id = R.id.et_topic_pump;
+      EditText etTopicPump = ViewBindings.findChildViewById(rootView, id);
+      if (etTopicPump == null) {
+        break missingId;
+      }
+
+      id = R.id.et_topic_sensors;
+      EditText etTopicSensors = ViewBindings.findChildViewById(rootView, id);
+      if (etTopicSensors == null) {
+        break missingId;
+      }
+
+      id = R.id.et_topic_status;
+      EditText etTopicStatus = ViewBindings.findChildViewById(rootView, id);
+      if (etTopicStatus == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_conn_status;
+      TextView tvConnStatus = ViewBindings.findChildViewById(rootView, id);
+      if (tvConnStatus == null) {
+        break missingId;
+      }
+
+      return new FragmentConfigBinding((ScrollView) rootView, btnSaveConfig, btnTestMqtt,
+          etFarmName, etInterval, etMqttHost, etMqttPass, etMqttPort, etMqttUser, etTankCapacity,
+          etTopicPump, etTopicSensors, etTopicStatus, tvConnStatus);
+    }
+    String missingId = rootView.getResources().getResourceName(id);
+    throw new NullPointerException("Missing required view with ID: ".concat(missingId));
   }
 }

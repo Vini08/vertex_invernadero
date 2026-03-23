@@ -8,16 +8,37 @@ import android.widget.ScrollView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
+import androidx.viewbinding.ViewBindings;
 import com.agrocontrol.app.R;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import java.lang.NullPointerException;
 import java.lang.Override;
+import java.lang.String;
 
 public final class FragmentAlertsBinding implements ViewBinding {
   @NonNull
   private final ScrollView rootView;
 
-  private FragmentAlertsBinding(@NonNull ScrollView rootView) {
+  @NonNull
+  public final SwitchMaterial swAlertSoil;
+
+  @NonNull
+  public final SwitchMaterial swAlertTank;
+
+  @NonNull
+  public final SwitchMaterial swAlertTemp;
+
+  @NonNull
+  public final SwitchMaterial swAlertWifi;
+
+  private FragmentAlertsBinding(@NonNull ScrollView rootView, @NonNull SwitchMaterial swAlertSoil,
+      @NonNull SwitchMaterial swAlertTank, @NonNull SwitchMaterial swAlertTemp,
+      @NonNull SwitchMaterial swAlertWifi) {
     this.rootView = rootView;
+    this.swAlertSoil = swAlertSoil;
+    this.swAlertTank = swAlertTank;
+    this.swAlertTemp = swAlertTemp;
+    this.swAlertWifi = swAlertWifi;
   }
 
   @Override
@@ -43,10 +64,38 @@ public final class FragmentAlertsBinding implements ViewBinding {
 
   @NonNull
   public static FragmentAlertsBinding bind(@NonNull View rootView) {
-    if (rootView == null) {
-      throw new NullPointerException("rootView");
-    }
+    // The body of this method is generated in a way you would not otherwise write.
+    // This is done to optimize the compiled bytecode for size and performance.
+    int id;
+    missingId: {
+      id = R.id.sw_alert_soil;
+      SwitchMaterial swAlertSoil = ViewBindings.findChildViewById(rootView, id);
+      if (swAlertSoil == null) {
+        break missingId;
+      }
 
-    return new FragmentAlertsBinding((ScrollView) rootView);
+      id = R.id.sw_alert_tank;
+      SwitchMaterial swAlertTank = ViewBindings.findChildViewById(rootView, id);
+      if (swAlertTank == null) {
+        break missingId;
+      }
+
+      id = R.id.sw_alert_temp;
+      SwitchMaterial swAlertTemp = ViewBindings.findChildViewById(rootView, id);
+      if (swAlertTemp == null) {
+        break missingId;
+      }
+
+      id = R.id.sw_alert_wifi;
+      SwitchMaterial swAlertWifi = ViewBindings.findChildViewById(rootView, id);
+      if (swAlertWifi == null) {
+        break missingId;
+      }
+
+      return new FragmentAlertsBinding((ScrollView) rootView, swAlertSoil, swAlertTank, swAlertTemp,
+          swAlertWifi);
+    }
+    String missingId = rootView.getResources().getResourceName(id);
+    throw new NullPointerException("Missing required view with ID: ".concat(missingId));
   }
 }

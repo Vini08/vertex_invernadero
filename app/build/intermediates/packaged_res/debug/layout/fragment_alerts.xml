@@ -1,14 +1,297 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="@color/colorBg">
+
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical" android:padding="20dp">
+        android:orientation="vertical" android:padding="16dp">
+
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Pantalla alerts" android:textSize="20sp" android:textStyle="bold"
-            android:textColor="@color/colorTextPrimary" android:layout_marginTop="16dp"/>
+            android:text="Notificaciones" android:textSize="16sp" android:textStyle="bold"
+            android:textColor="@color/colorTextPrimary"
+            android:layout_marginBottom="14dp" android:layout_marginTop="4dp"/>
+
+        <!-- Alerta: temperatura alta (warn) -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:background="@drawable/bg_alert_warn"
+            android:padding="14dp" android:layout_marginBottom="10dp" android:gravity="center_vertical">
+            <androidx.cardview.widget.CardView android:layout_width="42dp" android:layout_height="42dp"
+                app:cardBackgroundColor="#D68910" app:cardCornerRadius="13dp"
+                android:layout_marginEnd="14dp">
+                <ImageView android:layout_width="22dp" android:layout_height="22dp"
+                    android:layout_gravity="center" android:src="@drawable/ic_alert_temp"/>
+            </androidx.cardview.widget.CardView>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Temperatura elevada: 34°C"
+                    android:textSize="13sp" android:textStyle="bold"
+                    android:textColor="@color/colorTextPrimary"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Hace 12 minutos" android:textSize="11sp"
+                    android:textColor="@color/chipWarnText" android:layout_marginTop="3dp"/>
+            </LinearLayout>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="WARN" android:textSize="10sp" android:textStyle="bold"
+                android:textColor="@color/chipWarnText" android:background="@drawable/bg_chip_warn"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+                android:paddingTop="3dp" android:paddingBottom="3dp"/>
+        </LinearLayout>
+
+        <!-- Alerta: riego completado (ok) -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:background="@drawable/bg_alert_ok"
+            android:padding="14dp" android:layout_marginBottom="10dp" android:gravity="center_vertical">
+            <androidx.cardview.widget.CardView android:layout_width="42dp" android:layout_height="42dp"
+                app:cardBackgroundColor="#27AE60" app:cardCornerRadius="13dp"
+                android:layout_marginEnd="14dp">
+                <ImageView android:layout_width="22dp" android:layout_height="22dp"
+                    android:layout_gravity="center" android:src="@drawable/ic_alert_ok"/>
+            </androidx.cardview.widget.CardView>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Riego matutino completado"
+                    android:textSize="13sp" android:textStyle="bold"
+                    android:textColor="@color/colorTextPrimary"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Hoy 06:45 · Duración 15 min" android:textSize="11sp"
+                    android:textColor="@color/chipOkText" android:layout_marginTop="3dp"/>
+            </LinearLayout>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="OK" android:textSize="10sp" android:textStyle="bold"
+                android:textColor="@color/chipOkText" android:background="@drawable/bg_chip_ok"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+                android:paddingTop="3dp" android:paddingBottom="3dp"/>
+        </LinearLayout>
+
+        <!-- Alerta: conexión (info) -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:background="@drawable/bg_alert_info"
+            android:padding="14dp" android:layout_marginBottom="10dp" android:gravity="center_vertical">
+            <androidx.cardview.widget.CardView android:layout_width="42dp" android:layout_height="42dp"
+                app:cardBackgroundColor="#2874CC" app:cardCornerRadius="13dp"
+                android:layout_marginEnd="14dp">
+                <ImageView android:layout_width="22dp" android:layout_height="22dp"
+                    android:layout_gravity="center" android:src="@drawable/ic_alert_wifi"/>
+            </androidx.cardview.widget.CardView>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="ESP8266 reconectado al broker"
+                    android:textSize="13sp" android:textStyle="bold"
+                    android:textColor="@color/colorTextPrimary"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Hoy 06:20" android:textSize="11sp"
+                    android:textColor="@color/chipInfoText" android:layout_marginTop="3dp"/>
+            </LinearLayout>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="INFO" android:textSize="10sp" android:textStyle="bold"
+                android:textColor="@color/chipInfoText" android:background="@drawable/bg_chip_info"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+                android:paddingTop="3dp" android:paddingBottom="3dp"/>
+        </LinearLayout>
+
+        <!-- Alerta: humedad baja (warn) -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:background="@drawable/bg_alert_warn"
+            android:padding="14dp" android:layout_marginBottom="10dp" android:gravity="center_vertical">
+            <androidx.cardview.widget.CardView android:layout_width="42dp" android:layout_height="42dp"
+                app:cardBackgroundColor="#D68910" app:cardCornerRadius="13dp"
+                android:layout_marginEnd="14dp">
+                <ImageView android:layout_width="22dp" android:layout_height="22dp"
+                    android:layout_gravity="center" android:src="@drawable/ic_soil"/>
+            </androidx.cardview.widget.CardView>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Humedad bajo umbral: 38%"
+                    android:textSize="13sp" android:textStyle="bold"
+                    android:textColor="@color/colorTextPrimary"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Ayer 17:55 — riego auto activado" android:textSize="11sp"
+                    android:textColor="@color/chipWarnText" android:layout_marginTop="3dp"/>
+            </LinearLayout>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="WARN" android:textSize="10sp" android:textStyle="bold"
+                android:textColor="@color/chipWarnText" android:background="@drawable/bg_chip_warn"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+                android:paddingTop="3dp" android:paddingBottom="3dp"/>
+        </LinearLayout>
+
+        <!-- Alerta: depósito crítico (crit) -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:background="@drawable/bg_alert_crit"
+            android:padding="14dp" android:layout_marginBottom="10dp" android:gravity="center_vertical">
+            <androidx.cardview.widget.CardView android:layout_width="42dp" android:layout_height="42dp"
+                app:cardBackgroundColor="#C0392B" app:cardCornerRadius="13dp"
+                android:layout_marginEnd="14dp">
+                <ImageView android:layout_width="22dp" android:layout_height="22dp"
+                    android:layout_gravity="center" android:src="@drawable/ic_alert_tank"/>
+            </androidx.cardview.widget.CardView>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Nivel depósito crítico: 12%"
+                    android:textSize="13sp" android:textStyle="bold"
+                    android:textColor="@color/colorTextPrimary"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Ayer 08:10 — rellenado posterior" android:textSize="11sp"
+                    android:textColor="@color/chipBadText" android:layout_marginTop="3dp"/>
+            </LinearLayout>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="CRIT" android:textSize="10sp" android:textStyle="bold"
+                android:textColor="@color/chipBadText" android:background="@drawable/bg_chip_bad"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+                android:paddingTop="3dp" android:paddingBottom="3dp"/>
+        </LinearLayout>
+
+        <!-- Alerta: firmware (info) -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:background="@drawable/bg_alert_info"
+            android:padding="14dp" android:layout_marginBottom="18dp" android:gravity="center_vertical">
+            <androidx.cardview.widget.CardView android:layout_width="42dp" android:layout_height="42dp"
+                app:cardBackgroundColor="#2874CC" app:cardCornerRadius="13dp"
+                android:layout_marginEnd="14dp">
+                <ImageView android:layout_width="22dp" android:layout_height="22dp"
+                    android:layout_gravity="center" android:src="@drawable/ic_alert_info"/>
+            </androidx.cardview.widget.CardView>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Actualización de firmware disponible"
+                    android:textSize="13sp" android:textStyle="bold"
+                    android:textColor="@color/colorTextPrimary"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Hace 2 días — v1.2.0" android:textSize="11sp"
+                    android:textColor="@color/chipInfoText" android:layout_marginTop="3dp"/>
+            </LinearLayout>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="INFO" android:textSize="10sp" android:textStyle="bold"
+                android:textColor="@color/chipInfoText" android:background="@drawable/bg_chip_info"
+                android:paddingStart="8dp" android:paddingEnd="8dp"
+                android:paddingTop="3dp" android:paddingBottom="3dp"/>
+        </LinearLayout>
+
+        <!-- Configurar alertas -->
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="En construcción..." android:textSize="14sp"
-            android:textColor="@color/colorTextSecondary" android:layout_marginTop="8dp"/>
+            android:text="Configurar alertas" android:textSize="16sp" android:textStyle="bold"
+            android:textColor="@color/colorTextPrimary" android:layout_marginBottom="12dp"/>
+
+        <androidx.cardview.widget.CardView android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:cardBackgroundColor="@color/colorCard"
+            app:cardCornerRadius="18dp" app:cardElevation="2dp" android:layout_marginBottom="8dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="4dp">
+
+                <!-- Temperatura -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
+                    <androidx.cardview.widget.CardView android:layout_width="36dp" android:layout_height="36dp"
+                        app:cardBackgroundColor="#D68910" app:cardCornerRadius="10dp"
+                        android:layout_marginEnd="14dp">
+                        <ImageView android:layout_width="18dp" android:layout_height="18dp"
+                            android:layout_gravity="center" android:src="@drawable/ic_alert_temp"/>
+                    </androidx.cardview.widget.CardView>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Temperatura alta" android:textSize="13sp"
+                            android:textStyle="bold" android:textColor="@color/colorTextPrimary"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Notificar si > 35°C" android:textSize="11sp"
+                            android:textColor="@color/colorTextSecondary" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/sw_alert_temp" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:checked="true"
+                        style="@style/AgroSwitch"/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="@color/colorBorder"/>
+
+                <!-- Suelo seco -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
+                    <androidx.cardview.widget.CardView android:layout_width="36dp" android:layout_height="36dp"
+                        app:cardBackgroundColor="#27AE60" app:cardCornerRadius="10dp"
+                        android:layout_marginEnd="14dp">
+                        <ImageView android:layout_width="18dp" android:layout_height="18dp"
+                            android:layout_gravity="center" android:src="@drawable/ic_soil"/>
+                    </androidx.cardview.widget.CardView>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Suelo muy seco" android:textSize="13sp"
+                            android:textStyle="bold" android:textColor="@color/colorTextPrimary"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Notificar si &lt; 30%" android:textSize="11sp"
+                            android:textColor="@color/colorTextSecondary" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/sw_alert_soil" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:checked="true"
+                        style="@style/AgroSwitch"/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="@color/colorBorder"/>
+
+                <!-- Depósito bajo -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
+                    <androidx.cardview.widget.CardView android:layout_width="36dp" android:layout_height="36dp"
+                        app:cardBackgroundColor="#2874CC" app:cardCornerRadius="10dp"
+                        android:layout_marginEnd="14dp">
+                        <ImageView android:layout_width="18dp" android:layout_height="18dp"
+                            android:layout_gravity="center" android:src="@drawable/ic_alert_tank"/>
+                    </androidx.cardview.widget.CardView>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Depósito bajo" android:textSize="13sp"
+                            android:textStyle="bold" android:textColor="@color/colorTextPrimary"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Notificar si &lt; 20%" android:textSize="11sp"
+                            android:textColor="@color/colorTextSecondary" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/sw_alert_tank" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:checked="true"
+                        style="@style/AgroSwitch"/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="@color/colorBorder"/>
+
+                <!-- Desconexión ESP -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
+                    <androidx.cardview.widget.CardView android:layout_width="36dp" android:layout_height="36dp"
+                        app:cardBackgroundColor="#C0392B" app:cardCornerRadius="10dp"
+                        android:layout_marginEnd="14dp">
+                        <ImageView android:layout_width="18dp" android:layout_height="18dp"
+                            android:layout_gravity="center" android:src="@drawable/ic_alert_wifi"/>
+                    </androidx.cardview.widget.CardView>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Desconexión ESP" android:textSize="13sp"
+                            android:textStyle="bold" android:textColor="@color/colorTextPrimary"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Notificar si pierde conexión MQTT" android:textSize="11sp"
+                            android:textColor="@color/colorTextSecondary" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/sw_alert_wifi" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:checked="false"
+                        style="@style/AgroSwitch"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
     </LinearLayout>
 </ScrollView>

@@ -51,10 +51,10 @@
             android:text="Sensores en vivo" android:textSize="16sp"
             android:textColor="@color/colorTextPrimary" android:textStyle="bold" android:layout_marginBottom="12dp"/>
 
-        <!-- Fila 1 métricas -->
+        <!-- Fila 1: Humedad suelo + Temperatura -->
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:layout_marginBottom="12dp">
-            <!-- Humedad suelo -->
+
             <androidx.cardview.widget.CardView android:layout_width="0dp" android:layout_height="wrap_content"
                 android:layout_weight="1" android:layout_marginEnd="6dp"
                 app:cardBackgroundColor="@color/colorCard" app:cardCornerRadius="18dp" app:cardElevation="2dp">
@@ -63,30 +63,29 @@
                     <androidx.cardview.widget.CardView android:layout_width="44dp" android:layout_height="44dp"
                         app:cardBackgroundColor="#27AE60" app:cardCornerRadius="14dp" android:layout_marginBottom="12dp">
                         <ImageView android:layout_width="22dp" android:layout_height="22dp"
-                            android:layout_gravity="center" android:src="@drawable/ic_pump"/>
+                            android:layout_gravity="center" android:src="@drawable/ic_soil"/>
                     </androidx.cardview.widget.CardView>
                     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:orientation="horizontal" android:gravity="bottom">
-                        <TextView android:id="@+id/tv_soil_humidity"
-                            android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="68" android:textSize="28sp"
+                        <TextView android:id="@+id/tv_soil_humidity" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="68" android:textSize="28sp"
                             android:textColor="@color/colorTextPrimary" android:textStyle="bold"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="%" android:textSize="14sp"
-                            android:textColor="@color/colorTextSecondary" android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                            android:text="%" android:textSize="14sp" android:textColor="@color/colorTextSecondary"
+                            android:textStyle="bold" android:layout_marginBottom="4dp"/>
                     </LinearLayout>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="Humedad suelo" android:textSize="12sp"
                         android:textColor="@color/colorTextSecondary" android:layout_marginTop="4dp"/>
-                    <TextView android:id="@+id/chip_soil"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="↑ Óptimo" android:textSize="11sp" android:textStyle="bold"
+                    <TextView android:id="@+id/chip_soil" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="↑ Óptimo"
+                        android:textSize="11sp" android:textStyle="bold"
                         android:textColor="@color/chipOkText" android:background="@drawable/bg_chip_ok"
                         android:paddingStart="9dp" android:paddingEnd="9dp"
                         android:paddingTop="3dp" android:paddingBottom="3dp" android:layout_marginTop="8dp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-            <!-- Temperatura -->
+
             <androidx.cardview.widget.CardView android:layout_width="0dp" android:layout_height="wrap_content"
                 android:layout_weight="1" android:layout_marginStart="6dp"
                 app:cardBackgroundColor="@color/colorCard" app:cardCornerRadius="18dp" app:cardElevation="2dp">
@@ -95,24 +94,23 @@
                     <androidx.cardview.widget.CardView android:layout_width="44dp" android:layout_height="44dp"
                         app:cardBackgroundColor="#D68910" app:cardCornerRadius="14dp" android:layout_marginBottom="12dp">
                         <ImageView android:layout_width="22dp" android:layout_height="22dp"
-                            android:layout_gravity="center" android:src="@drawable/ic_pump"/>
+                            android:layout_gravity="center" android:src="@drawable/ic_thermometer"/>
                     </androidx.cardview.widget.CardView>
                     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:orientation="horizontal" android:gravity="bottom">
-                        <TextView android:id="@+id/tv_temperature"
-                            android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="34" android:textSize="28sp"
+                        <TextView android:id="@+id/tv_temperature" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="34" android:textSize="28sp"
                             android:textColor="@color/colorTextPrimary" android:textStyle="bold"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="°C" android:textSize="14sp"
-                            android:textColor="@color/colorTextSecondary" android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                            android:text="°C" android:textSize="14sp" android:textColor="@color/colorTextSecondary"
+                            android:textStyle="bold" android:layout_marginBottom="4dp"/>
                     </LinearLayout>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="Temperatura" android:textSize="12sp"
                         android:textColor="@color/colorTextSecondary" android:layout_marginTop="4dp"/>
-                    <TextView android:id="@+id/chip_temp"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="↑ Alta" android:textSize="11sp" android:textStyle="bold"
+                    <TextView android:id="@+id/chip_temp" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="↑ Alta"
+                        android:textSize="11sp" android:textStyle="bold"
                         android:textColor="@color/chipWarnText" android:background="@drawable/bg_chip_warn"
                         android:paddingStart="9dp" android:paddingEnd="9dp"
                         android:paddingTop="3dp" android:paddingBottom="3dp" android:layout_marginTop="8dp"/>
@@ -120,10 +118,10 @@
             </androidx.cardview.widget.CardView>
         </LinearLayout>
 
-        <!-- Fila 2 métricas -->
+        <!-- Fila 2: Humedad aire + Luz -->
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:layout_marginBottom="14dp">
-            <!-- Humedad aire -->
+
             <androidx.cardview.widget.CardView android:layout_width="0dp" android:layout_height="wrap_content"
                 android:layout_weight="1" android:layout_marginEnd="6dp"
                 app:cardBackgroundColor="@color/colorCard" app:cardCornerRadius="18dp" app:cardElevation="2dp">
@@ -132,30 +130,29 @@
                     <androidx.cardview.widget.CardView android:layout_width="44dp" android:layout_height="44dp"
                         app:cardBackgroundColor="#2874CC" app:cardCornerRadius="14dp" android:layout_marginBottom="12dp">
                         <ImageView android:layout_width="22dp" android:layout_height="22dp"
-                            android:layout_gravity="center" android:src="@drawable/ic_pump"/>
+                            android:layout_gravity="center" android:src="@drawable/ic_humidity"/>
                     </androidx.cardview.widget.CardView>
                     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:orientation="horizontal" android:gravity="bottom">
-                        <TextView android:id="@+id/tv_air_humidity"
-                            android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="72" android:textSize="28sp"
+                        <TextView android:id="@+id/tv_air_humidity" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="72" android:textSize="28sp"
                             android:textColor="@color/colorTextPrimary" android:textStyle="bold"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="%" android:textSize="14sp"
-                            android:textColor="@color/colorTextSecondary" android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                            android:text="%" android:textSize="14sp" android:textColor="@color/colorTextSecondary"
+                            android:textStyle="bold" android:layout_marginBottom="4dp"/>
                     </LinearLayout>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="Humedad aire" android:textSize="12sp"
                         android:textColor="@color/colorTextSecondary" android:layout_marginTop="4dp"/>
-                    <TextView android:id="@+id/chip_air"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="↔ Normal" android:textSize="11sp" android:textStyle="bold"
+                    <TextView android:id="@+id/chip_air" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="↔ Normal"
+                        android:textSize="11sp" android:textStyle="bold"
                         android:textColor="@color/chipOkText" android:background="@drawable/bg_chip_ok"
                         android:paddingStart="9dp" android:paddingEnd="9dp"
                         android:paddingTop="3dp" android:paddingBottom="3dp" android:layout_marginTop="8dp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-            <!-- Luz solar -->
+
             <androidx.cardview.widget.CardView android:layout_width="0dp" android:layout_height="wrap_content"
                 android:layout_weight="1" android:layout_marginStart="6dp"
                 app:cardBackgroundColor="@color/colorCard" app:cardCornerRadius="18dp" app:cardElevation="2dp">
@@ -164,24 +161,23 @@
                     <androidx.cardview.widget.CardView android:layout_width="44dp" android:layout_height="44dp"
                         app:cardBackgroundColor="#17A589" app:cardCornerRadius="14dp" android:layout_marginBottom="12dp">
                         <ImageView android:layout_width="22dp" android:layout_height="22dp"
-                            android:layout_gravity="center" android:src="@drawable/ic_pump"/>
+                            android:layout_gravity="center" android:src="@drawable/ic_sun_small"/>
                     </androidx.cardview.widget.CardView>
                     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:orientation="horizontal" android:gravity="bottom">
-                        <TextView android:id="@+id/tv_light"
-                            android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="12.1" android:textSize="28sp"
+                        <TextView android:id="@+id/tv_light" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="12.1" android:textSize="28sp"
                             android:textColor="@color/colorTextPrimary" android:textStyle="bold"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text=" klx" android:textSize="14sp"
-                            android:textColor="@color/colorTextSecondary" android:textStyle="bold" android:layout_marginBottom="4dp"/>
+                            android:text=" klx" android:textSize="14sp" android:textColor="@color/colorTextSecondary"
+                            android:textStyle="bold" android:layout_marginBottom="4dp"/>
                     </LinearLayout>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="Luz solar" android:textSize="12sp"
                         android:textColor="@color/colorTextSecondary" android:layout_marginTop="4dp"/>
-                    <TextView android:id="@+id/chip_light"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="☀ Pleno sol" android:textSize="11sp" android:textStyle="bold"
+                    <TextView android:id="@+id/chip_light" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="☀ Pleno sol"
+                        android:textSize="11sp" android:textStyle="bold"
                         android:textColor="@color/chipOkText" android:background="@drawable/bg_chip_ok"
                         android:paddingStart="9dp" android:paddingEnd="9dp"
                         android:paddingTop="3dp" android:paddingBottom="3dp" android:layout_marginTop="8dp"/>
@@ -200,9 +196,9 @@
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content"
                         android:layout_weight="1" android:text="💧 Depósito de agua"
                         android:textSize="14sp" android:textColor="@color/colorTextPrimary" android:textStyle="bold"/>
-                    <TextView android:id="@+id/badge_tank"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="73% — Suficiente" android:textSize="11sp" android:textStyle="bold"
+                    <TextView android:id="@+id/badge_tank" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="73% — Suficiente"
+                        android:textSize="11sp" android:textStyle="bold"
                         android:textColor="@color/chipOkText" android:background="@drawable/bg_chip_ok"
                         android:paddingStart="12dp" android:paddingEnd="12dp"
                         android:paddingTop="4dp" android:paddingBottom="4dp"/>
@@ -217,10 +213,9 @@
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content"
                         android:layout_weight="1" android:text="0 L"
                         android:textSize="11sp" android:textColor="@color/colorTextHint"/>
-                    <TextView android:id="@+id/tv_tank_value"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="365 L de 500 L" android:textSize="12sp"
-                        android:textColor="@color/colorTextPrimary" android:textStyle="bold"/>
+                    <TextView android:id="@+id/tv_tank_value" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="365 L de 500 L"
+                        android:textSize="12sp" android:textColor="@color/colorTextPrimary" android:textStyle="bold"/>
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content"
                         android:layout_weight="1" android:text="500 L"
                         android:textSize="11sp" android:textColor="@color/colorTextHint" android:gravity="end"/>
@@ -237,7 +232,7 @@
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="⚡ Control rápido" android:textSize="14sp"
                     android:textColor="@color/colorTextPrimary" android:textStyle="bold" android:layout_marginBottom="6dp"/>
-                <!-- Bomba -->
+
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:gravity="center_vertical"
                     android:paddingTop="14dp" android:paddingBottom="14dp">
@@ -250,17 +245,17 @@
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="Bomba de agua" android:textSize="14sp"
                             android:textColor="@color/colorTextPrimary" android:textStyle="bold"/>
-                        <TextView android:id="@+id/tv_pump_status"
-                            android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Apagada" android:textSize="12sp"
-                            android:textColor="@color/colorTextSecondary" android:layout_marginTop="2dp"/>
+                        <TextView android:id="@+id/tv_pump_status" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="Apagada"
+                            android:textSize="12sp" android:textColor="@color/colorTextSecondary" android:layout_marginTop="2dp"/>
                     </LinearLayout>
                     <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/sw_pump" android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:checked="false" style="@style/AgroSwitch"/>
                 </LinearLayout>
+
                 <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/colorBorder"/>
-                <!-- Ventilador -->
+
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:gravity="center_vertical"
                     android:paddingTop="14dp" android:paddingBottom="14dp">
@@ -273,17 +268,17 @@
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="Ventilador" android:textSize="14sp"
                             android:textColor="@color/colorTextPrimary" android:textStyle="bold"/>
-                        <TextView android:id="@+id/tv_fan_status"
-                            android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Apagado" android:textSize="12sp"
-                            android:textColor="@color/colorTextSecondary" android:layout_marginTop="2dp"/>
+                        <TextView android:id="@+id/tv_fan_status" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="Apagado"
+                            android:textSize="12sp" android:textColor="@color/colorTextSecondary" android:layout_marginTop="2dp"/>
                     </LinearLayout>
                     <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/sw_fan" android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:checked="false" style="@style/AgroSwitch"/>
                 </LinearLayout>
+
                 <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/colorBorder"/>
-                <!-- Calentador -->
+
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:gravity="center_vertical" android:paddingTop="14dp">
                     <androidx.cardview.widget.CardView android:layout_width="48dp" android:layout_height="48dp"
@@ -295,10 +290,9 @@
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="Calentador" android:textSize="14sp"
                             android:textColor="@color/colorTextPrimary" android:textStyle="bold"/>
-                        <TextView android:id="@+id/tv_heater_status"
-                            android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Apagado" android:textSize="12sp"
-                            android:textColor="@color/colorTextSecondary" android:layout_marginTop="2dp"/>
+                        <TextView android:id="@+id/tv_heater_status" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="Apagado"
+                            android:textSize="12sp" android:textColor="@color/colorTextSecondary" android:layout_marginTop="2dp"/>
                     </LinearLayout>
                     <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/sw_heater" android:layout_width="wrap_content"

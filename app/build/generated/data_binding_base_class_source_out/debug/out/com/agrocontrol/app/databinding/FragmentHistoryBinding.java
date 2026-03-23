@@ -4,20 +4,78 @@ package com.agrocontrol.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
+import androidx.viewbinding.ViewBindings;
 import com.agrocontrol.app.R;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
 import java.lang.NullPointerException;
 import java.lang.Override;
+import java.lang.String;
 
 public final class FragmentHistoryBinding implements ViewBinding {
   @NonNull
   private final ScrollView rootView;
 
-  private FragmentHistoryBinding(@NonNull ScrollView rootView) {
+  @NonNull
+  public final BarChart chartPump;
+
+  @NonNull
+  public final LineChart chartSoil;
+
+  @NonNull
+  public final LineChart chartTemp;
+
+  @NonNull
+  public final TextView tabSoil24h;
+
+  @NonNull
+  public final TextView tabSoil30d;
+
+  @NonNull
+  public final TextView tabSoil7d;
+
+  @NonNull
+  public final TextView tabTemp24h;
+
+  @NonNull
+  public final TextView tabTemp7d;
+
+  @NonNull
+  public final LinearLayout tabsSoil;
+
+  @NonNull
+  public final LinearLayout tabsTemp;
+
+  @NonNull
+  public final TextView tvAvgSoil;
+
+  @NonNull
+  public final TextView tvAvgTemp;
+
+  private FragmentHistoryBinding(@NonNull ScrollView rootView, @NonNull BarChart chartPump,
+      @NonNull LineChart chartSoil, @NonNull LineChart chartTemp, @NonNull TextView tabSoil24h,
+      @NonNull TextView tabSoil30d, @NonNull TextView tabSoil7d, @NonNull TextView tabTemp24h,
+      @NonNull TextView tabTemp7d, @NonNull LinearLayout tabsSoil, @NonNull LinearLayout tabsTemp,
+      @NonNull TextView tvAvgSoil, @NonNull TextView tvAvgTemp) {
     this.rootView = rootView;
+    this.chartPump = chartPump;
+    this.chartSoil = chartSoil;
+    this.chartTemp = chartTemp;
+    this.tabSoil24h = tabSoil24h;
+    this.tabSoil30d = tabSoil30d;
+    this.tabSoil7d = tabSoil7d;
+    this.tabTemp24h = tabTemp24h;
+    this.tabTemp7d = tabTemp7d;
+    this.tabsSoil = tabsSoil;
+    this.tabsTemp = tabsTemp;
+    this.tvAvgSoil = tvAvgSoil;
+    this.tvAvgTemp = tvAvgTemp;
   }
 
   @Override
@@ -43,10 +101,87 @@ public final class FragmentHistoryBinding implements ViewBinding {
 
   @NonNull
   public static FragmentHistoryBinding bind(@NonNull View rootView) {
-    if (rootView == null) {
-      throw new NullPointerException("rootView");
-    }
+    // The body of this method is generated in a way you would not otherwise write.
+    // This is done to optimize the compiled bytecode for size and performance.
+    int id;
+    missingId: {
+      id = R.id.chart_pump;
+      BarChart chartPump = ViewBindings.findChildViewById(rootView, id);
+      if (chartPump == null) {
+        break missingId;
+      }
 
-    return new FragmentHistoryBinding((ScrollView) rootView);
+      id = R.id.chart_soil;
+      LineChart chartSoil = ViewBindings.findChildViewById(rootView, id);
+      if (chartSoil == null) {
+        break missingId;
+      }
+
+      id = R.id.chart_temp;
+      LineChart chartTemp = ViewBindings.findChildViewById(rootView, id);
+      if (chartTemp == null) {
+        break missingId;
+      }
+
+      id = R.id.tab_soil_24h;
+      TextView tabSoil24h = ViewBindings.findChildViewById(rootView, id);
+      if (tabSoil24h == null) {
+        break missingId;
+      }
+
+      id = R.id.tab_soil_30d;
+      TextView tabSoil30d = ViewBindings.findChildViewById(rootView, id);
+      if (tabSoil30d == null) {
+        break missingId;
+      }
+
+      id = R.id.tab_soil_7d;
+      TextView tabSoil7d = ViewBindings.findChildViewById(rootView, id);
+      if (tabSoil7d == null) {
+        break missingId;
+      }
+
+      id = R.id.tab_temp_24h;
+      TextView tabTemp24h = ViewBindings.findChildViewById(rootView, id);
+      if (tabTemp24h == null) {
+        break missingId;
+      }
+
+      id = R.id.tab_temp_7d;
+      TextView tabTemp7d = ViewBindings.findChildViewById(rootView, id);
+      if (tabTemp7d == null) {
+        break missingId;
+      }
+
+      id = R.id.tabs_soil;
+      LinearLayout tabsSoil = ViewBindings.findChildViewById(rootView, id);
+      if (tabsSoil == null) {
+        break missingId;
+      }
+
+      id = R.id.tabs_temp;
+      LinearLayout tabsTemp = ViewBindings.findChildViewById(rootView, id);
+      if (tabsTemp == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_avg_soil;
+      TextView tvAvgSoil = ViewBindings.findChildViewById(rootView, id);
+      if (tvAvgSoil == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_avg_temp;
+      TextView tvAvgTemp = ViewBindings.findChildViewById(rootView, id);
+      if (tvAvgTemp == null) {
+        break missingId;
+      }
+
+      return new FragmentHistoryBinding((ScrollView) rootView, chartPump, chartSoil, chartTemp,
+          tabSoil24h, tabSoil30d, tabSoil7d, tabTemp24h, tabTemp7d, tabsSoil, tabsTemp, tvAvgSoil,
+          tvAvgTemp);
+    }
+    String missingId = rootView.getResources().getResourceName(id);
+    throw new NullPointerException("Missing required view with ID: ".concat(missingId));
   }
 }

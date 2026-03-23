@@ -22,7 +22,7 @@
                 android:textColor="@color/colorTextSecondary" android:textStyle="bold"/>
             <TextView android:id="@+id/tv_farm_name"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Parcela Norte 🌿" android:textSize="20sp"
+                android:text="Invernadero Vertex 🌿" android:textSize="16sp"
                 android:textColor="@color/colorTextPrimary" android:textStyle="bold"/>
         </LinearLayout>
 

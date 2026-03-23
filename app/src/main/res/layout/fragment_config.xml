@@ -1,14 +1,300 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="@color/colorBg">
+
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:orientation="vertical" android:padding="20dp">
+        android:orientation="vertical" android:padding="16dp">
+
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Pantalla config" android:textSize="20sp" android:textStyle="bold"
-            android:textColor="@color/colorTextPrimary" android:layout_marginTop="16dp"/>
+            android:text="Configuración" android:textSize="16sp" android:textStyle="bold"
+            android:textColor="@color/colorTextPrimary"
+            android:layout_marginBottom="14dp" android:layout_marginTop="4dp"/>
+
+        <!-- Estado de conexión -->
+        <androidx.cardview.widget.CardView android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:cardBackgroundColor="@color/colorCard"
+            app:cardCornerRadius="18dp" app:cardElevation="2dp" android:layout_marginBottom="14dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:padding="16dp" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Estado del broker" android:textSize="13sp"
+                        android:textStyle="bold" android:textColor="@color/colorTextPrimary"/>
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_marginTop="4dp">
+                        <View android:layout_width="8dp" android:layout_height="8dp"
+                            android:background="@drawable/bg_dot_green" android:layout_marginEnd="6dp"/>
+                        <TextView android:id="@+id/tv_conn_status"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Conectado · 2ms latencia" android:textSize="12sp"
+                            android:textColor="@color/chipOkText" android:textStyle="bold"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <Button android:id="@+id/btn_test_mqtt"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Probar" android:textSize="12sp" android:textStyle="bold"
+                    android:textColor="@color/green_primary"
+                    android:background="@drawable/bg_chip_ok"
+                    android:paddingStart="16dp" android:paddingEnd="16dp"
+                    android:paddingTop="8dp" android:paddingBottom="8dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Sección: Broker MQTT -->
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="En construcción..." android:textSize="14sp"
-            android:textColor="@color/colorTextSecondary" android:layout_marginTop="8dp"/>
+            android:text="BROKER MQTT" android:textSize="11sp" android:textStyle="bold"
+            android:textColor="@color/colorTextSecondary" android:letterSpacing="0.08"
+            android:layout_marginBottom="8dp"/>
+
+        <androidx.cardview.widget.CardView android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:cardBackgroundColor="@color/colorCard"
+            app:cardCornerRadius="18dp" app:cardElevation="2dp" android:layout_marginBottom="16dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Host" android:textSize="13sp" android:textStyle="bold"
+                            android:textColor="@color/colorTextPrimary"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Dirección del broker" android:textSize="11sp"
+                            android:textColor="@color/colorTextSecondary" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                    <EditText android:id="@+id/et_mqtt_host"
+                        android:layout_width="170dp" android:layout_height="wrap_content"
+                        android:text="broker.hivemq.com" android:textSize="12sp"
+                        android:textColor="@color/colorTextPrimary"
+                        android:background="@drawable/bg_schedule_time"
+                        android:padding="10dp" android:gravity="end"
+                        android:inputType="text" android:singleLine="true"/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="@color/colorBorder"/>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Puerto TLS" android:textSize="13sp" android:textStyle="bold"
+                            android:textColor="@color/colorTextPrimary"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Conexión segura" android:textSize="11sp"
+                            android:textColor="@color/colorTextSecondary" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                    <EditText android:id="@+id/et_mqtt_port"
+                        android:layout_width="80dp" android:layout_height="wrap_content"
+                        android:text="8883" android:textSize="12sp"
+                        android:textColor="@color/colorTextPrimary"
+                        android:background="@drawable/bg_schedule_time"
+                        android:padding="10dp" android:gravity="end"
+                        android:inputType="number"/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="@color/colorBorder"/>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Usuario" android:textSize="13sp" android:textStyle="bold"
+                            android:textColor="@color/colorTextPrimary"/>
+                    </LinearLayout>
+                    <EditText android:id="@+id/et_mqtt_user"
+                        android:layout_width="170dp" android:layout_height="wrap_content"
+                        android:hint="usuario" android:textSize="12sp"
+                        android:textColor="@color/colorTextPrimary"
+                        android:background="@drawable/bg_schedule_time"
+                        android:padding="10dp" android:gravity="end"
+                        android:inputType="text" android:singleLine="true"/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="@color/colorBorder"/>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Contraseña" android:textSize="13sp" android:textStyle="bold"
+                            android:textColor="@color/colorTextPrimary"/>
+                    </LinearLayout>
+                    <EditText android:id="@+id/et_mqtt_pass"
+                        android:layout_width="170dp" android:layout_height="wrap_content"
+                        android:hint="contraseña" android:textSize="12sp"
+                        android:textColor="@color/colorTextPrimary"
+                        android:background="@drawable/bg_schedule_time"
+                        android:padding="10dp" android:gravity="end"
+                        android:inputType="textPassword"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Sección: Topics -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="TOPICS MQTT" android:textSize="11sp" android:textStyle="bold"
+            android:textColor="@color/colorTextSecondary" android:letterSpacing="0.08"
+            android:layout_marginBottom="8dp"/>
+
+        <androidx.cardview.widget.CardView android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:cardBackgroundColor="@color/colorCard"
+            app:cardCornerRadius="18dp" app:cardElevation="2dp" android:layout_marginBottom="16dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="Sensores (pub)"
+                        android:textSize="13sp" android:textStyle="bold"
+                        android:textColor="@color/colorTextPrimary"/>
+                    <EditText android:id="@+id/et_topic_sensors"
+                        android:layout_width="160dp" android:layout_height="wrap_content"
+                        android:text="home/sensors" android:textSize="12sp"
+                        android:textColor="@color/colorTextPrimary"
+                        android:background="@drawable/bg_schedule_time"
+                        android:padding="10dp" android:gravity="end"
+                        android:inputType="text" android:singleLine="true"/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="@color/colorBorder"/>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="Bomba (sub)"
+                        android:textSize="13sp" android:textStyle="bold"
+                        android:textColor="@color/colorTextPrimary"/>
+                    <EditText android:id="@+id/et_topic_pump"
+                        android:layout_width="160dp" android:layout_height="wrap_content"
+                        android:text="home/pump" android:textSize="12sp"
+                        android:textColor="@color/colorTextPrimary"
+                        android:background="@drawable/bg_schedule_time"
+                        android:padding="10dp" android:gravity="end"
+                        android:inputType="text" android:singleLine="true"/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="@color/colorBorder"/>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="Estado ESP (sub)"
+                        android:textSize="13sp" android:textStyle="bold"
+                        android:textColor="@color/colorTextPrimary"/>
+                    <EditText android:id="@+id/et_topic_status"
+                        android:layout_width="160dp" android:layout_height="wrap_content"
+                        android:text="home/status" android:textSize="12sp"
+                        android:textColor="@color/colorTextPrimary"
+                        android:background="@drawable/bg_schedule_time"
+                        android:padding="10dp" android:gravity="end"
+                        android:inputType="text" android:singleLine="true"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Sección: Dispositivo -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="DISPOSITIVO" android:textSize="11sp" android:textStyle="bold"
+            android:textColor="@color/colorTextSecondary" android:letterSpacing="0.08"
+            android:layout_marginBottom="8dp"/>
+
+        <androidx.cardview.widget.CardView android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:cardBackgroundColor="@color/colorCard"
+            app:cardCornerRadius="18dp" app:cardElevation="2dp" android:layout_marginBottom="16dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Nombre parcela" android:textSize="13sp" android:textStyle="bold"
+                            android:textColor="@color/colorTextPrimary"/>
+                    </LinearLayout>
+                    <EditText android:id="@+id/et_farm_name"
+                        android:layout_width="160dp" android:layout_height="wrap_content"
+                        android:text="Parcela Norte" android:textSize="12sp"
+                        android:textColor="@color/colorTextPrimary"
+                        android:background="@drawable/bg_schedule_time"
+                        android:padding="10dp" android:gravity="end"
+                        android:inputType="text" android:singleLine="true"/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="@color/colorBorder"/>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Intervalo lectura" android:textSize="13sp" android:textStyle="bold"
+                            android:textColor="@color/colorTextPrimary"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Segundos entre cada envío" android:textSize="11sp"
+                            android:textColor="@color/colorTextSecondary" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                    <EditText android:id="@+id/et_interval"
+                        android:layout_width="70dp" android:layout_height="wrap_content"
+                        android:text="10" android:textSize="12sp"
+                        android:textColor="@color/colorTextPrimary"
+                        android:background="@drawable/bg_schedule_time"
+                        android:padding="10dp" android:gravity="end"
+                        android:inputType="number"/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="@color/colorBorder"/>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Capacidad depósito" android:textSize="13sp" android:textStyle="bold"
+                            android:textColor="@color/colorTextPrimary"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Litros totales del tanque" android:textSize="11sp"
+                            android:textColor="@color/colorTextSecondary" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                    <EditText android:id="@+id/et_tank_capacity"
+                        android:layout_width="70dp" android:layout_height="wrap_content"
+                        android:text="500" android:textSize="12sp"
+                        android:textColor="@color/colorTextPrimary"
+                        android:background="@drawable/bg_schedule_time"
+                        android:padding="10dp" android:gravity="end"
+                        android:inputType="number"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Botón guardar -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save_config"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="💾  Guardar configuración"
+            android:textSize="15sp" android:textStyle="bold" android:textColor="@color/white"
+            app:backgroundTint="@color/green_primary"
+            android:paddingTop="14dp" android:paddingBottom="14dp"
+            android:layout_marginBottom="8dp" app:cornerRadius="14dp"/>
+
     </LinearLayout>
 </ScrollView>

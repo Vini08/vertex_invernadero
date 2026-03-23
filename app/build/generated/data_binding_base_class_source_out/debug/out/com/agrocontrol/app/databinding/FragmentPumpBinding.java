@@ -4,20 +4,75 @@ package com.agrocontrol.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
+import androidx.viewbinding.ViewBindings;
 import com.agrocontrol.app.R;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import java.lang.NullPointerException;
 import java.lang.Override;
+import java.lang.String;
 
 public final class FragmentPumpBinding implements ViewBinding {
   @NonNull
   private final ScrollView rootView;
 
-  private FragmentPumpBinding(@NonNull ScrollView rootView) {
+  @NonNull
+  public final TextView badgeAuto;
+
+  @NonNull
+  public final LinearLayout pumpHeroBg;
+
+  @NonNull
+  public final SeekBar seekbarThreshold;
+
+  @NonNull
+  public final SwitchMaterial swPumpHero;
+
+  @NonNull
+  public final SwitchMaterial swSched1;
+
+  @NonNull
+  public final SwitchMaterial swSched2;
+
+  @NonNull
+  public final SwitchMaterial swSched3;
+
+  @NonNull
+  public final TextView tvAutoStatus;
+
+  @NonNull
+  public final TextView tvPumpHeroSub;
+
+  @NonNull
+  public final TextView tvPumpTimer;
+
+  @NonNull
+  public final TextView tvThresholdVal;
+
+  private FragmentPumpBinding(@NonNull ScrollView rootView, @NonNull TextView badgeAuto,
+      @NonNull LinearLayout pumpHeroBg, @NonNull SeekBar seekbarThreshold,
+      @NonNull SwitchMaterial swPumpHero, @NonNull SwitchMaterial swSched1,
+      @NonNull SwitchMaterial swSched2, @NonNull SwitchMaterial swSched3,
+      @NonNull TextView tvAutoStatus, @NonNull TextView tvPumpHeroSub,
+      @NonNull TextView tvPumpTimer, @NonNull TextView tvThresholdVal) {
     this.rootView = rootView;
+    this.badgeAuto = badgeAuto;
+    this.pumpHeroBg = pumpHeroBg;
+    this.seekbarThreshold = seekbarThreshold;
+    this.swPumpHero = swPumpHero;
+    this.swSched1 = swSched1;
+    this.swSched2 = swSched2;
+    this.swSched3 = swSched3;
+    this.tvAutoStatus = tvAutoStatus;
+    this.tvPumpHeroSub = tvPumpHeroSub;
+    this.tvPumpTimer = tvPumpTimer;
+    this.tvThresholdVal = tvThresholdVal;
   }
 
   @Override
@@ -43,10 +98,81 @@ public final class FragmentPumpBinding implements ViewBinding {
 
   @NonNull
   public static FragmentPumpBinding bind(@NonNull View rootView) {
-    if (rootView == null) {
-      throw new NullPointerException("rootView");
-    }
+    // The body of this method is generated in a way you would not otherwise write.
+    // This is done to optimize the compiled bytecode for size and performance.
+    int id;
+    missingId: {
+      id = R.id.badge_auto;
+      TextView badgeAuto = ViewBindings.findChildViewById(rootView, id);
+      if (badgeAuto == null) {
+        break missingId;
+      }
 
-    return new FragmentPumpBinding((ScrollView) rootView);
+      id = R.id.pump_hero_bg;
+      LinearLayout pumpHeroBg = ViewBindings.findChildViewById(rootView, id);
+      if (pumpHeroBg == null) {
+        break missingId;
+      }
+
+      id = R.id.seekbar_threshold;
+      SeekBar seekbarThreshold = ViewBindings.findChildViewById(rootView, id);
+      if (seekbarThreshold == null) {
+        break missingId;
+      }
+
+      id = R.id.sw_pump_hero;
+      SwitchMaterial swPumpHero = ViewBindings.findChildViewById(rootView, id);
+      if (swPumpHero == null) {
+        break missingId;
+      }
+
+      id = R.id.sw_sched1;
+      SwitchMaterial swSched1 = ViewBindings.findChildViewById(rootView, id);
+      if (swSched1 == null) {
+        break missingId;
+      }
+
+      id = R.id.sw_sched2;
+      SwitchMaterial swSched2 = ViewBindings.findChildViewById(rootView, id);
+      if (swSched2 == null) {
+        break missingId;
+      }
+
+      id = R.id.sw_sched3;
+      SwitchMaterial swSched3 = ViewBindings.findChildViewById(rootView, id);
+      if (swSched3 == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_auto_status;
+      TextView tvAutoStatus = ViewBindings.findChildViewById(rootView, id);
+      if (tvAutoStatus == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_pump_hero_sub;
+      TextView tvPumpHeroSub = ViewBindings.findChildViewById(rootView, id);
+      if (tvPumpHeroSub == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_pump_timer;
+      TextView tvPumpTimer = ViewBindings.findChildViewById(rootView, id);
+      if (tvPumpTimer == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_threshold_val;
+      TextView tvThresholdVal = ViewBindings.findChildViewById(rootView, id);
+      if (tvThresholdVal == null) {
+        break missingId;
+      }
+
+      return new FragmentPumpBinding((ScrollView) rootView, badgeAuto, pumpHeroBg, seekbarThreshold,
+          swPumpHero, swSched1, swSched2, swSched3, tvAutoStatus, tvPumpHeroSub, tvPumpTimer,
+          tvThresholdVal);
+    }
+    String missingId = rootView.getResources().getResourceName(id);
+    throw new NullPointerException("Missing required view with ID: ".concat(missingId));
   }
 }
