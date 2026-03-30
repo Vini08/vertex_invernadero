@@ -3113,6 +3113,7 @@ drawable ic_check
 drawable ic_clear_black_24
 drawable ic_clock_black_24dp
 drawable ic_dashboard
+drawable ic_emergency
 drawable ic_fan
 drawable ic_heater
 drawable ic_history
@@ -3127,6 +3128,7 @@ drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
 drawable ic_pump
+drawable ic_reset
 drawable ic_search_black_24
 drawable ic_settings
 drawable ic_soil
@@ -3300,6 +3302,7 @@ id autoCompleteToEnd
 id autoCompleteToStart
 id badge_auto
 id badge_tank
+id banner_emergency
 id barrier
 id baseline
 id beginOnFirstDraw
@@ -3312,6 +3315,7 @@ id bounce
 id bounceBoth
 id bounceEnd
 id bounceStart
+id btn_reset_emergency
 id btn_save_config
 id btn_test_mqtt
 id btn_theme
@@ -3416,6 +3420,7 @@ id et_topic_status
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
+id fab_emergency
 id fade
 id fill
 id fill_horizontal
@@ -3763,12 +3768,15 @@ id tv_mqtt_st
 id tv_pump_hero_sub
 id tv_pump_status
 id tv_pump_timer
+id tv_riego_count
 id tv_soil_humidity
 id tv_status
 id tv_sync
 id tv_tank_value
 id tv_temperature
 id tv_threshold_val
+id tv_tiempo_total
+id tv_ultimo_riego
 id unchecked
 id uniform
 id unlabeled
@@ -3909,6 +3917,7 @@ layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_main
+layout card_summary
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog

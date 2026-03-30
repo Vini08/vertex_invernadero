@@ -8,12 +8,12 @@
         "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\fragment_history.xml"
     },
     {
-        "merged": "com.agrocontrol.app-mergeDebugResources-40:/layout/fragment_config.xml",
-        "source": "com.agrocontrol.app-main-43:/layout/fragment_config.xml"
-    },
-    {
         "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\fragment_pump.xml",
         "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\fragment_pump.xml"
+    },
+    {
+        "merged": "com.agrocontrol.app-mergeDebugResources-40:/layout/fragment_pump.xml",
+        "source": "com.agrocontrol.app-main-43:/layout/fragment_pump.xml"
     },
     {
         "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\fragment_config.xml",
@@ -22,6 +22,10 @@
     {
         "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\activity_main.xml",
         "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\card_summary.xml",
+        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\card_summary.xml"
     },
     {
         "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\fragment_dashboard.xml",

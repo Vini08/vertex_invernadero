@@ -11,7 +11,6 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.agrocontrol.app.R;
 import com.agrocontrol.app.mqtt.MqttManager;
 import com.agrocontrol.app.mqtt.SensorData;
-import java.util.Random;
 
 public class DashboardFragment extends Fragment implements MqttManager.MqttCallback {
 
@@ -22,17 +21,11 @@ public class DashboardFragment extends Fragment implements MqttManager.MqttCallb
     private ProgressBar progressTank;
     private SwitchMaterial swPump, swFan, swHeat;
 
-    private Handler mainHandler;
-    private boolean mqttConnected = false;
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
+    private int syncN = 0;
 
-    // Datos actuales
-    private float soil=68f, temp=34f, air=72f, light=12.1f;
-    private int tank=73, syncN=0;
-
-    // Simulación fallback si MQTT no está conectado
-    private final Random rand = new Random();
-    private Handler simHandler;
-    private Runnable simRunnable;
+    private float soil=0, temp=0, air=0, light=0;
+    private int tank=0;
 
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -44,13 +37,44 @@ public class DashboardFragment extends Fragment implements MqttManager.MqttCallb
     @Override
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
-
-        mainHandler = new Handler(Looper.getMainLooper());
-
         bindViews(v);
         setupSwitches();
-        updateUI();
-        connectMqtt();
+
+        // Mostrar último dato guardado inmediatamente
+        SensorData last = MqttManager.getInstance().getLastData();
+        if (last != null) {
+            soil = last.soil; temp = last.temp;
+            air  = last.air;  light = last.light; tank = last.tank;
+            updateUI();
+        }
+
+        // Estado de conexión actual
+        if (MqttManager.getInstance().isConnected()) {
+            tvMqttSt.setText("Online");
+            tvMqttSt.setTextColor(getResources().getColor(R.color.green_primary, null));
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Registrar callback SOLO cuando el fragment está visible
+        MqttManager.getInstance().addCallback(this);
+
+        // Refrescar con el último dato al volver a esta pantalla
+        SensorData last = MqttManager.getInstance().getLastData();
+        if (last != null) {
+            soil = last.soil; temp = last.temp;
+            air  = last.air;  light = last.light; tank = last.tank;
+            updateUI();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Quitar callback cuando el fragment NO está visible
+        MqttManager.getInstance().removeCallback(this);
     }
 
     private void bindViews(View v) {
@@ -81,14 +105,12 @@ public class DashboardFragment extends Fragment implements MqttManager.MqttCallb
                 on ? R.color.green_primary : R.color.colorTextSecondary, null));
             MqttManager.getInstance().setPump(on);
         });
-
         swFan.setOnCheckedChangeListener((b, on) -> {
             tvFanSt.setText(on ? "Encendido" : "Apagado");
             tvFanSt.setTextColor(getResources().getColor(
                 on ? R.color.green_primary : R.color.colorTextSecondary, null));
             MqttManager.getInstance().setFan(on);
         });
-
         swHeat.setOnCheckedChangeListener((b, on) -> {
             tvHeatSt.setText(on ? "Encendido" : "Apagado");
             tvHeatSt.setTextColor(getResources().getColor(
@@ -97,34 +119,21 @@ public class DashboardFragment extends Fragment implements MqttManager.MqttCallb
         });
     }
 
-    // ─── Conectar MQTT ────────────────────────────────────────────────────────
-    private void connectMqtt() {
-        MqttManager.getInstance().setCallback(this);
-        MqttManager.getInstance().connect(requireContext());
-        // Mientras conecta, mostrar simulación
-        startSimulation();
-    }
-
-    // ─── Callbacks MQTT ───────────────────────────────────────────────────────
     @Override
     public void onConnected() {
-        mqttConnected = true;
         mainHandler.post(() -> {
             if (!isAdded()) return;
             tvMqttSt.setText("Online");
             tvMqttSt.setTextColor(getResources().getColor(R.color.green_primary, null));
-            stopSimulation(); // Detener simulación cuando hay datos reales
         });
     }
 
     @Override
     public void onDisconnected() {
-        mqttConnected = false;
         mainHandler.post(() -> {
             if (!isAdded()) return;
             tvMqttSt.setText("Offline");
             tvMqttSt.setTextColor(getResources().getColor(R.color.statusError, null));
-            startSimulation(); // Reactivar simulación si se pierde conexión
         });
     }
 
@@ -132,15 +141,11 @@ public class DashboardFragment extends Fragment implements MqttManager.MqttCallb
     public void onMessageReceived(String topic, String payload) {
         mainHandler.post(() -> {
             if (!isAdded()) return;
-
             if (topic.equals(MqttManager.TOPIC_SENSORS)) {
                 SensorData data = SensorData.fromJson(payload);
                 if (data.isValid()) {
-                    soil  = data.soil;
-                    temp  = data.temp;
-                    air   = data.air;
-                    light = data.light;
-                    tank  = data.tank;
+                    soil = data.soil; temp = data.temp;
+                    air  = data.air;  light = data.light; tank = data.tank;
                     syncN++;
                     tvSync.setText(syncN + "");
                     updateUI();
@@ -160,7 +165,6 @@ public class DashboardFragment extends Fragment implements MqttManager.MqttCallb
         });
     }
 
-    // ─── Actualizar UI ────────────────────────────────────────────────────────
     private void updateUI() {
         tvSoil.setText(String.valueOf((int) soil));
         tvTemp.setText(String.valueOf((int) temp));
@@ -170,7 +174,6 @@ public class DashboardFragment extends Fragment implements MqttManager.MqttCallb
         tvTank.setText((tank * 5) + " L de 500 L");
         badgeTank.setText(tank + "% — " + (tank >= 60 ? "Suficiente" : tank >= 30 ? "Moderado" : "¡Bajo!"));
 
-        // Chip humedad suelo
         if (soil >= 60) {
             chipSoil.setText("↑ Óptimo");
             chipSoil.setTextColor(getResources().getColor(R.color.chipOkText, null));
@@ -185,7 +188,6 @@ public class DashboardFragment extends Fragment implements MqttManager.MqttCallb
             chipSoil.setBackgroundResource(R.drawable.bg_chip_bad);
         }
 
-        // Chip temperatura
         if (temp > 32) {
             chipTemp.setText("↑ Alta");
             chipTemp.setTextColor(getResources().getColor(R.color.chipWarnText, null));
@@ -199,43 +201,5 @@ public class DashboardFragment extends Fragment implements MqttManager.MqttCallb
             chipTemp.setTextColor(getResources().getColor(R.color.chipOkText, null));
             chipTemp.setBackgroundResource(R.drawable.bg_chip_ok);
         }
-    }
-
-    // ─── Simulación fallback ──────────────────────────────────────────────────
-    private void startSimulation() {
-        if (simHandler != null) return; // ya corriendo
-        simHandler = new Handler(Looper.getMainLooper());
-        simRunnable = new Runnable() {
-            @Override public void run() {
-                if (!isAdded() || mqttConnected) return;
-                soil  = clamp(soil  + (rand.nextFloat()-.5f)*2,   0,100);
-                temp  = clamp(temp  + (rand.nextFloat()-.5f)*.5f, 0,50);
-                air   = clamp(air   + (rand.nextFloat()-.5f)*1,   0,100);
-                light = clamp(light + (rand.nextFloat()-.5f)*.3f, 0,100);
-                syncN++;
-                tvSync.setText(syncN + "s");
-                updateUI();
-                simHandler.postDelayed(this, 3000);
-            }
-        };
-        simHandler.postDelayed(simRunnable, 3000);
-    }
-
-    private void stopSimulation() {
-        if (simHandler != null) {
-            simHandler.removeCallbacks(simRunnable);
-            simHandler = null;
-        }
-    }
-
-    private float clamp(float v, float mn, float mx) {
-        return Math.max(mn, Math.min(mx, v));
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        stopSimulation();
-        MqttManager.getInstance().setCallback(null);
     }
 }

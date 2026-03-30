@@ -4,16 +4,20 @@
         "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\drawable-night\\bg_dot_warn.xml"
     },
     {
+        "merged": "com.agrocontrol.app-merged_res-41:/layout_fragment_pump.xml.flat",
+        "source": "com.agrocontrol.app-main-43:/layout/fragment_pump.xml"
+    },
+    {
         "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\drawable-night_bg_chip_green.xml.flat",
         "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\drawable-night\\bg_chip_green.xml"
     },
     {
-        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\drawable_ic_heater.xml.flat",
-        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\drawable\\ic_heater.xml"
-    },
-    {
         "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\drawable-night_bg_alert_ok.xml.flat",
         "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\drawable-night\\bg_alert_ok.xml"
+    },
+    {
+        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\drawable_ic_heater.xml.flat",
+        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\drawable\\ic_heater.xml"
     },
     {
         "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\drawable-night_bg_dot_green.xml.flat",
@@ -48,8 +52,16 @@
         "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\mipmap-xxxhdpi\\ic_launcher_round.xml"
     },
     {
+        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\drawable_ic_reset.xml.flat",
+        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\drawable\\ic_reset.xml"
+    },
+    {
         "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\drawable_bg_chip_ok.xml.flat",
         "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\drawable\\bg_chip_ok.xml"
+    },
+    {
+        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\layout_card_summary.xml.flat",
+        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\card_summary.xml"
     },
     {
         "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\drawable_bg_chip_warn.xml.flat",
@@ -96,6 +108,10 @@
         "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\drawable\\ic_pump.xml"
     },
     {
+        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\drawable_ic_emergency.xml.flat",
+        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\drawable\\ic_emergency.xml"
+    },
+    {
         "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\drawable_ic_alert_info.xml.flat",
         "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\drawable\\ic_alert_info.xml"
     },
@@ -128,12 +144,12 @@
         "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\menu\\bottom_nav_menu.xml"
     },
     {
-        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\mipmap-hdpi_ic_launcher_round.xml.flat",
-        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\mipmap-hdpi\\ic_launcher_round.xml"
-    },
-    {
         "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\drawable_ic_alert_crit.xml.flat",
         "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\drawable\\ic_alert_crit.xml"
+    },
+    {
+        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\mipmap-hdpi_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\mipmap-hdpi\\ic_launcher_round.xml"
     },
     {
         "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\drawable_ic_thermometer.xml.flat",
@@ -146,10 +162,6 @@
     {
         "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\drawable_ic_alerts.xml.flat",
         "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\drawable\\ic_alerts.xml"
-    },
-    {
-        "merged": "com.agrocontrol.app-merged_res-41:/layout_fragment_config.xml.flat",
-        "source": "com.agrocontrol.app-main-43:/layout/fragment_config.xml"
     },
     {
         "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\drawable_bg_alert_warn.xml.flat",
@@ -260,12 +272,12 @@
         "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\activity_main.xml"
     },
     {
-        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\drawable_ic_sun_small.xml.flat",
-        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\drawable\\ic_sun_small.xml"
-    },
-    {
         "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\drawable-night_bg_hero_on.xml.flat",
         "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\drawable-night\\bg_hero_on.xml"
+    },
+    {
+        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\drawable_ic_sun_small.xml.flat",
+        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\drawable\\ic_sun_small.xml"
     },
     {
         "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-merged_res-41:\\mipmap-xhdpi_ic_launcher_round.xml.flat",

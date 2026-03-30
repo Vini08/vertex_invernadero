@@ -68,7 +68,7 @@
                     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:orientation="horizontal" android:gravity="bottom">
                         <TextView android:id="@+id/tv_soil_humidity" android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" android:text="68" android:textSize="28sp"
+                            android:layout_height="wrap_content" android:text="0.0" android:textSize="28sp"
                             android:textColor="@color/colorTextPrimary" android:textStyle="bold"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="%" android:textSize="14sp" android:textColor="@color/colorTextSecondary"
@@ -99,7 +99,7 @@
                     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:orientation="horizontal" android:gravity="bottom">
                         <TextView android:id="@+id/tv_temperature" android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" android:text="34" android:textSize="28sp"
+                            android:layout_height="wrap_content" android:text="0.0" android:textSize="28sp"
                             android:textColor="@color/colorTextPrimary" android:textStyle="bold"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="°C" android:textSize="14sp" android:textColor="@color/colorTextSecondary"
@@ -135,7 +135,7 @@
                     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:orientation="horizontal" android:gravity="bottom">
                         <TextView android:id="@+id/tv_air_humidity" android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" android:text="72" android:textSize="28sp"
+                            android:layout_height="wrap_content" android:text="0.0" android:textSize="28sp"
                             android:textColor="@color/colorTextPrimary" android:textStyle="bold"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="%" android:textSize="14sp" android:textColor="@color/colorTextSecondary"
@@ -166,7 +166,7 @@
                     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:orientation="horizontal" android:gravity="bottom">
                         <TextView android:id="@+id/tv_light" android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" android:text="12.1" android:textSize="28sp"
+                            android:layout_height="wrap_content" android:text="0.0" android:textSize="28sp"
                             android:textColor="@color/colorTextPrimary" android:textStyle="bold"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text=" klx" android:textSize="14sp" android:textColor="@color/colorTextSecondary"

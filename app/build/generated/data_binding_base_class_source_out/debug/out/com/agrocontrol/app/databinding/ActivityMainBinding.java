@@ -4,6 +4,7 @@ package com.agrocontrol.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.agrocontrol.app.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
@@ -24,13 +26,22 @@ public final class ActivityMainBinding implements ViewBinding {
   private final ConstraintLayout rootView;
 
   @NonNull
+  public final LinearLayout bannerEmergency;
+
+  @NonNull
   public final BottomNavigationView bottomNav;
+
+  @NonNull
+  public final Button btnResetEmergency;
 
   @NonNull
   public final ImageButton btnTheme;
 
   @NonNull
   public final LinearLayout chipStatus;
+
+  @NonNull
+  public final FloatingActionButton fabEmergency;
 
   @NonNull
   public final FragmentContainerView fragmentContainer;
@@ -48,14 +59,18 @@ public final class ActivityMainBinding implements ViewBinding {
   public final TextView tvStatus;
 
   private ActivityMainBinding(@NonNull ConstraintLayout rootView,
-      @NonNull BottomNavigationView bottomNav, @NonNull ImageButton btnTheme,
-      @NonNull LinearLayout chipStatus, @NonNull FragmentContainerView fragmentContainer,
-      @NonNull LinearLayout topbar, @NonNull TextView tvFarmName, @NonNull TextView tvGreeting,
-      @NonNull TextView tvStatus) {
+      @NonNull LinearLayout bannerEmergency, @NonNull BottomNavigationView bottomNav,
+      @NonNull Button btnResetEmergency, @NonNull ImageButton btnTheme,
+      @NonNull LinearLayout chipStatus, @NonNull FloatingActionButton fabEmergency,
+      @NonNull FragmentContainerView fragmentContainer, @NonNull LinearLayout topbar,
+      @NonNull TextView tvFarmName, @NonNull TextView tvGreeting, @NonNull TextView tvStatus) {
     this.rootView = rootView;
+    this.bannerEmergency = bannerEmergency;
     this.bottomNav = bottomNav;
+    this.btnResetEmergency = btnResetEmergency;
     this.btnTheme = btnTheme;
     this.chipStatus = chipStatus;
+    this.fabEmergency = fabEmergency;
     this.fragmentContainer = fragmentContainer;
     this.topbar = topbar;
     this.tvFarmName = tvFarmName;
@@ -90,9 +105,21 @@ public final class ActivityMainBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.banner_emergency;
+      LinearLayout bannerEmergency = ViewBindings.findChildViewById(rootView, id);
+      if (bannerEmergency == null) {
+        break missingId;
+      }
+
       id = R.id.bottom_nav;
       BottomNavigationView bottomNav = ViewBindings.findChildViewById(rootView, id);
       if (bottomNav == null) {
+        break missingId;
+      }
+
+      id = R.id.btn_reset_emergency;
+      Button btnResetEmergency = ViewBindings.findChildViewById(rootView, id);
+      if (btnResetEmergency == null) {
         break missingId;
       }
 
@@ -105,6 +132,12 @@ public final class ActivityMainBinding implements ViewBinding {
       id = R.id.chip_status;
       LinearLayout chipStatus = ViewBindings.findChildViewById(rootView, id);
       if (chipStatus == null) {
+        break missingId;
+      }
+
+      id = R.id.fab_emergency;
+      FloatingActionButton fabEmergency = ViewBindings.findChildViewById(rootView, id);
+      if (fabEmergency == null) {
         break missingId;
       }
 
@@ -138,8 +171,9 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityMainBinding((ConstraintLayout) rootView, bottomNav, btnTheme, chipStatus,
-          fragmentContainer, topbar, tvFarmName, tvGreeting, tvStatus);
+      return new ActivityMainBinding((ConstraintLayout) rootView, bannerEmergency, bottomNav,
+          btnResetEmergency, btnTheme, chipStatus, fabEmergency, fragmentContainer, topbar,
+          tvFarmName, tvGreeting, tvStatus);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));
