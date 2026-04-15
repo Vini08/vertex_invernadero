@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBg">
 
-    <!-- Topbar limpio -->
+    <!-- Topbar -->
     <LinearLayout android:id="@+id/topbar"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="horizontal" android:background="@color/colorCard"
@@ -19,11 +19,11 @@
             android:layout_weight="1" android:orientation="vertical">
             <TextView android:id="@+id/tv_greeting"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Buenos días" android:textSize="13sp"
+                android:text="Buenos días" android:textSize="12sp"
                 android:textColor="@color/colorTextSecondary" android:textStyle="bold"/>
             <TextView android:id="@+id/tv_farm_name"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Invernadero Vertex 🌿" android:textSize="16sp"
+                android:text="Invernadero Vertex 🌿" android:textSize="13sp"
                 android:textColor="@color/colorTextPrimary" android:textStyle="bold"/>
         </LinearLayout>
 
@@ -41,11 +41,21 @@
                 android:textColor="@color/green_primary" android:textStyle="bold"/>
         </LinearLayout>
 
+        <!-- Botón tema -->
         <ImageButton android:id="@+id/btn_theme"
             android:layout_width="38dp" android:layout_height="38dp"
             android:background="@drawable/bg_icon_btn"
             android:src="@drawable/ic_sun"
-            android:contentDescription="Tema" android:scaleType="center"/>
+            android:contentDescription="Tema" android:scaleType="center"
+            android:layout_marginEnd="6dp"/>
+
+        <!-- Botón configuración -->
+        <ImageButton android:id="@+id/btn_config"
+            android:layout_width="38dp" android:layout_height="38dp"
+            android:background="@drawable/bg_icon_btn"
+            android:src="@drawable/ic_settings"
+            android:contentDescription="Configuración" android:scaleType="center"/>
+
     </LinearLayout>
 
     <!-- Banner emergencia -->
@@ -57,12 +67,10 @@
         android:paddingTop="10dp" android:paddingBottom="10dp"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/topbar">
-
         <TextView android:layout_width="0dp" android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="⛔ EMERGENCIA ACTIVA — Todo apagado"
             android:textSize="13sp" android:textStyle="bold" android:textColor="#FFFFFF"/>
-
         <Button android:id="@+id/btn_reset_emergency"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="RESETEAR" android:textSize="11sp" android:textStyle="bold"
@@ -86,7 +94,7 @@
         app:itemTextColor="@color/bottom_nav_selector"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <!-- FAB Emergencia — flotante sobre el nav -->
+    <!-- FAB Emergencia -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_emergency"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -96,9 +104,11 @@
         app:tint="#FFFFFF"
         app:fabSize="mini"
         app:elevation="6dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginBottom="70dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

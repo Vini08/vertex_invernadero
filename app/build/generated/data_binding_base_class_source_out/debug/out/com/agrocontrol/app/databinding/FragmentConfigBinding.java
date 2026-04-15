@@ -10,6 +10,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.agrocontrol.app.R;
@@ -27,6 +28,9 @@ public final class FragmentConfigBinding implements ViewBinding {
 
   @NonNull
   public final Button btnTestMqtt;
+
+  @NonNull
+  public final CardView cardNotificaciones;
 
   @NonNull
   public final EditText etFarmName;
@@ -62,14 +66,16 @@ public final class FragmentConfigBinding implements ViewBinding {
   public final TextView tvConnStatus;
 
   private FragmentConfigBinding(@NonNull ScrollView rootView, @NonNull MaterialButton btnSaveConfig,
-      @NonNull Button btnTestMqtt, @NonNull EditText etFarmName, @NonNull EditText etInterval,
-      @NonNull EditText etMqttHost, @NonNull EditText etMqttPass, @NonNull EditText etMqttPort,
-      @NonNull EditText etMqttUser, @NonNull EditText etTankCapacity, @NonNull EditText etTopicPump,
+      @NonNull Button btnTestMqtt, @NonNull CardView cardNotificaciones,
+      @NonNull EditText etFarmName, @NonNull EditText etInterval, @NonNull EditText etMqttHost,
+      @NonNull EditText etMqttPass, @NonNull EditText etMqttPort, @NonNull EditText etMqttUser,
+      @NonNull EditText etTankCapacity, @NonNull EditText etTopicPump,
       @NonNull EditText etTopicSensors, @NonNull EditText etTopicStatus,
       @NonNull TextView tvConnStatus) {
     this.rootView = rootView;
     this.btnSaveConfig = btnSaveConfig;
     this.btnTestMqtt = btnTestMqtt;
+    this.cardNotificaciones = cardNotificaciones;
     this.etFarmName = etFarmName;
     this.etInterval = etInterval;
     this.etMqttHost = etMqttHost;
@@ -119,6 +125,12 @@ public final class FragmentConfigBinding implements ViewBinding {
       id = R.id.btn_test_mqtt;
       Button btnTestMqtt = ViewBindings.findChildViewById(rootView, id);
       if (btnTestMqtt == null) {
+        break missingId;
+      }
+
+      id = R.id.card_notificaciones;
+      CardView cardNotificaciones = ViewBindings.findChildViewById(rootView, id);
+      if (cardNotificaciones == null) {
         break missingId;
       }
 
@@ -189,8 +201,8 @@ public final class FragmentConfigBinding implements ViewBinding {
       }
 
       return new FragmentConfigBinding((ScrollView) rootView, btnSaveConfig, btnTestMqtt,
-          etFarmName, etInterval, etMqttHost, etMqttPass, etMqttPort, etMqttUser, etTankCapacity,
-          etTopicPump, etTopicSensors, etTopicStatus, tvConnStatus);
+          cardNotificaciones, etFarmName, etInterval, etMqttHost, etMqttPass, etMqttPort,
+          etMqttUser, etTankCapacity, etTopicPump, etTopicSensors, etTopicStatus, tvConnStatus);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

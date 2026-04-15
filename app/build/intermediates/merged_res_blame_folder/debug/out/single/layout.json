@@ -1,19 +1,23 @@
 [
     {
-        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\fragment_alerts.xml",
-        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\fragment_alerts.xml"
+        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\widget_agro.xml",
+        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\widget_agro.xml"
     },
     {
         "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\fragment_history.xml",
         "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\fragment_history.xml"
     },
     {
-        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\fragment_pump.xml",
-        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\fragment_pump.xml"
+        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\fragment_alerts.xml",
+        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\fragment_alerts.xml"
     },
     {
-        "merged": "com.agrocontrol.app-mergeDebugResources-40:/layout/fragment_pump.xml",
-        "source": "com.agrocontrol.app-main-43:/layout/fragment_pump.xml"
+        "merged": "com.agrocontrol.app-mergeDebugResources-40:/layout/fragment_config.xml",
+        "source": "com.agrocontrol.app-main-43:/layout/fragment_config.xml"
+    },
+    {
+        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\fragment_pump.xml",
+        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\fragment_pump.xml"
     },
     {
         "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\fragment_config.xml",
@@ -24,11 +28,35 @@
         "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\activity_main.xml"
     },
     {
+        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\fragment_dashboard.xml",
+        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\fragment_dashboard.xml"
+    },
+    {
         "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\card_summary.xml",
         "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\card_summary.xml"
     },
     {
-        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\fragment_dashboard.xml",
-        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\fragment_dashboard.xml"
+        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\fragment_notifications.xml",
+        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\fragment_notifications.xml"
+    },
+    {
+        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\item_chat_bot.xml",
+        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\item_chat_bot.xml"
+    },
+    {
+        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\item_riego.xml",
+        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\item_riego.xml"
+    },
+    {
+        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\item_alert.xml",
+        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\item_alert.xml"
+    },
+    {
+        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\item_chat_user.xml",
+        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\item_chat_user.xml"
+    },
+    {
+        "merged": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-mergeDebugResources-40:\\layout\\fragment_chat.xml",
+        "source": "C:\\Users\\vic_8\\.gradle\\daemon\\8.0\\com.agrocontrol.app-main-43:\\layout\\fragment_chat.xml"
     }
 ]

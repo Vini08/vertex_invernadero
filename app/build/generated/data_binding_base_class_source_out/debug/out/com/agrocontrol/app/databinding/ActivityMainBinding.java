@@ -32,6 +32,9 @@ public final class ActivityMainBinding implements ViewBinding {
   public final BottomNavigationView bottomNav;
 
   @NonNull
+  public final ImageButton btnConfig;
+
+  @NonNull
   public final Button btnResetEmergency;
 
   @NonNull
@@ -60,13 +63,15 @@ public final class ActivityMainBinding implements ViewBinding {
 
   private ActivityMainBinding(@NonNull ConstraintLayout rootView,
       @NonNull LinearLayout bannerEmergency, @NonNull BottomNavigationView bottomNav,
-      @NonNull Button btnResetEmergency, @NonNull ImageButton btnTheme,
-      @NonNull LinearLayout chipStatus, @NonNull FloatingActionButton fabEmergency,
-      @NonNull FragmentContainerView fragmentContainer, @NonNull LinearLayout topbar,
-      @NonNull TextView tvFarmName, @NonNull TextView tvGreeting, @NonNull TextView tvStatus) {
+      @NonNull ImageButton btnConfig, @NonNull Button btnResetEmergency,
+      @NonNull ImageButton btnTheme, @NonNull LinearLayout chipStatus,
+      @NonNull FloatingActionButton fabEmergency, @NonNull FragmentContainerView fragmentContainer,
+      @NonNull LinearLayout topbar, @NonNull TextView tvFarmName, @NonNull TextView tvGreeting,
+      @NonNull TextView tvStatus) {
     this.rootView = rootView;
     this.bannerEmergency = bannerEmergency;
     this.bottomNav = bottomNav;
+    this.btnConfig = btnConfig;
     this.btnResetEmergency = btnResetEmergency;
     this.btnTheme = btnTheme;
     this.chipStatus = chipStatus;
@@ -114,6 +119,12 @@ public final class ActivityMainBinding implements ViewBinding {
       id = R.id.bottom_nav;
       BottomNavigationView bottomNav = ViewBindings.findChildViewById(rootView, id);
       if (bottomNav == null) {
+        break missingId;
+      }
+
+      id = R.id.btn_config;
+      ImageButton btnConfig = ViewBindings.findChildViewById(rootView, id);
+      if (btnConfig == null) {
         break missingId;
       }
 
@@ -172,8 +183,8 @@ public final class ActivityMainBinding implements ViewBinding {
       }
 
       return new ActivityMainBinding((ConstraintLayout) rootView, bannerEmergency, bottomNav,
-          btnResetEmergency, btnTheme, chipStatus, fabEmergency, fragmentContainer, topbar,
-          tvFarmName, tvGreeting, tvStatus);
+          btnConfig, btnResetEmergency, btnTheme, chipStatus, fabEmergency, fragmentContainer,
+          topbar, tvFarmName, tvGreeting, tvStatus);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

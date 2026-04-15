@@ -24,7 +24,6 @@ public class ConfigFragment extends Fragment {
 
         PrefsManager prefs = new PrefsManager(requireContext());
 
-        // Referencias
         EditText etHost     = v.findViewById(R.id.et_mqtt_host);
         EditText etPort     = v.findViewById(R.id.et_mqtt_port);
         EditText etUser     = v.findViewById(R.id.et_mqtt_user);
@@ -39,7 +38,17 @@ public class ConfigFragment extends Fragment {
         Button btnTest      = v.findViewById(R.id.btn_test_mqtt);
         TextView tvStatus   = v.findViewById(R.id.tv_conn_status);
 
-        // Cargar valores guardados
+        // Card de notificaciones -> abre NotificationsFragment
+        androidx.cardview.widget.CardView cardNotif = v.findViewById(R.id.card_notificaciones);
+        if (cardNotif != null) {
+            cardNotif.setOnClickListener(vv ->
+                requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new NotificationsFragment())
+                    .addToBackStack(null)
+                    .commit());
+        }
+
         etHost.setText(prefs.getMqttHost());
         etPort.setText(String.valueOf(prefs.getMqttPort()));
         etUser.setText(prefs.getMqttUser());
@@ -49,21 +58,19 @@ public class ConfigFragment extends Fragment {
         etFarm.setText(prefs.getFarmName());
         etInterval.setText(String.valueOf(prefs.getInterval()));
 
-        // Guardar
         btnSave.setOnClickListener(view -> {
             try {
-                String host = etHost.getText().toString().trim();
-                String portStr = etPort.getText().toString().trim();
-                String user = etUser.getText().toString().trim();
-                String pass = etPass.getText().toString().trim();
-                String topicS = etTopicS.getText().toString().trim();
-                String topicP = etTopicP.getText().toString().trim();
-                String topicSt = etTopicSt.getText().toString().trim();
-                String farm = etFarm.getText().toString().trim();
+                String host      = etHost.getText().toString().trim();
+                String portStr   = etPort.getText().toString().trim();
+                String user      = etUser.getText().toString().trim();
+                String pass      = etPass.getText().toString().trim();
+                String topicS    = etTopicS.getText().toString().trim();
+                String topicP    = etTopicP.getText().toString().trim();
+                String topicSt   = etTopicSt.getText().toString().trim();
+                String farm      = etFarm.getText().toString().trim();
                 String intervalStr = etInterval.getText().toString().trim();
 
-                // Validaciones básicas
-                if (host.isEmpty()) { etHost.setError("Requerido"); return; }
+                if (host.isEmpty())   { etHost.setError("Requerido"); return; }
                 if (portStr.isEmpty()) { etPort.setError("Requerido"); return; }
                 if (topicS.isEmpty()) { etTopicS.setError("Requerido"); return; }
 
@@ -77,26 +84,23 @@ public class ConfigFragment extends Fragment {
                 prefs.setInterval(intervalStr.isEmpty() ? 10 : Integer.parseInt(intervalStr));
 
                 Toast.makeText(requireContext(),
-                    "✓ Configuración guardada correctamente", Toast.LENGTH_SHORT).show();
+                    "Configuracion guardada correctamente", Toast.LENGTH_SHORT).show();
 
             } catch (NumberFormatException e) {
                 Toast.makeText(requireContext(),
-                    "Verifica que el puerto e intervalo sean números", Toast.LENGTH_SHORT).show();
+                    "Verifica que el puerto e intervalo sean numeros", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Probar conexión
         btnTest.setOnClickListener(view -> {
-            tvStatus.setText("Probando conexión...");
+            tvStatus.setText("Probando conexion...");
             tvStatus.setTextColor(getResources().getColor(R.color.chipWarnText, null));
-
-            // Simular prueba (se reemplaza con MQTT real)
             v.postDelayed(() -> {
                 if (!isAdded()) return;
-                tvStatus.setText("Conectado · 2ms latencia");
+                tvStatus.setText("Conectado");
                 tvStatus.setTextColor(getResources().getColor(R.color.chipOkText, null));
                 Toast.makeText(requireContext(),
-                    "✓ Conexión exitosa con el broker", Toast.LENGTH_SHORT).show();
+                    "Conexion exitosa con el broker", Toast.LENGTH_SHORT).show();
             }, 1500);
         });
     }

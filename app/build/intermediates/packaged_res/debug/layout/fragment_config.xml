@@ -8,11 +8,11 @@
         android:orientation="vertical" android:padding="16dp">
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Configuración" android:textSize="16sp" android:textStyle="bold"
+            android:text="Configuracion" android:textSize="16sp" android:textStyle="bold"
             android:textColor="@color/colorTextPrimary"
             android:layout_marginBottom="14dp" android:layout_marginTop="4dp"/>
 
-        <!-- Estado de conexión -->
+        <!-- Estado de conexion -->
         <androidx.cardview.widget.CardView android:layout_width="match_parent"
             android:layout_height="wrap_content" app:cardBackgroundColor="@color/colorCard"
             app:cardCornerRadius="18dp" app:cardElevation="2dp" android:layout_marginBottom="14dp">
@@ -30,7 +30,7 @@
                             android:background="@drawable/bg_dot_green" android:layout_marginEnd="6dp"/>
                         <TextView android:id="@+id/tv_conn_status"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Conectado · 2ms latencia" android:textSize="12sp"
+                            android:text="Conectado" android:textSize="12sp"
                             android:textColor="@color/chipOkText" android:textStyle="bold"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -44,18 +44,16 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Sección: Broker MQTT -->
+        <!-- BROKER MQTT -->
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="BROKER MQTT" android:textSize="11sp" android:textStyle="bold"
             android:textColor="@color/colorTextSecondary" android:letterSpacing="0.08"
             android:layout_marginBottom="8dp"/>
-
         <androidx.cardview.widget.CardView android:layout_width="match_parent"
             android:layout_height="wrap_content" app:cardBackgroundColor="@color/colorCard"
             app:cardCornerRadius="18dp" app:cardElevation="2dp" android:layout_marginBottom="16dp">
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical">
-
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
@@ -64,7 +62,7 @@
                             android:text="Host" android:textSize="13sp" android:textStyle="bold"
                             android:textColor="@color/colorTextPrimary"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Dirección del broker" android:textSize="11sp"
+                            android:text="Direccion del broker" android:textSize="11sp"
                             android:textColor="@color/colorTextSecondary" android:layout_marginTop="2dp"/>
                     </LinearLayout>
                     <EditText android:id="@+id/et_mqtt_host"
@@ -75,10 +73,7 @@
                         android:padding="10dp" android:gravity="end"
                         android:inputType="text" android:singleLine="true"/>
                 </LinearLayout>
-
-                <View android:layout_width="match_parent" android:layout_height="1dp"
-                    android:background="@color/colorBorder"/>
-
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/colorBorder"/>
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
@@ -87,7 +82,7 @@
                             android:text="Puerto TLS" android:textSize="13sp" android:textStyle="bold"
                             android:textColor="@color/colorTextPrimary"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Conexión segura" android:textSize="11sp"
+                            android:text="Conexion segura" android:textSize="11sp"
                             android:textColor="@color/colorTextSecondary" android:layout_marginTop="2dp"/>
                     </LinearLayout>
                     <EditText android:id="@+id/et_mqtt_port"
@@ -98,18 +93,13 @@
                         android:padding="10dp" android:gravity="end"
                         android:inputType="number"/>
                 </LinearLayout>
-
-                <View android:layout_width="match_parent" android:layout_height="1dp"
-                    android:background="@color/colorBorder"/>
-
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/colorBorder"/>
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:orientation="vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Usuario" android:textSize="13sp" android:textStyle="bold"
-                            android:textColor="@color/colorTextPrimary"/>
-                    </LinearLayout>
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="Usuario"
+                        android:textSize="13sp" android:textStyle="bold"
+                        android:textColor="@color/colorTextPrimary"/>
                     <EditText android:id="@+id/et_mqtt_user"
                         android:layout_width="170dp" android:layout_height="wrap_content"
                         android:hint="usuario" android:textSize="12sp"
@@ -118,42 +108,34 @@
                         android:padding="10dp" android:gravity="end"
                         android:inputType="text" android:singleLine="true"/>
                 </LinearLayout>
-
-                <View android:layout_width="match_parent" android:layout_height="1dp"
-                    android:background="@color/colorBorder"/>
-
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/colorBorder"/>
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:orientation="vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Contraseña" android:textSize="13sp" android:textStyle="bold"
-                            android:textColor="@color/colorTextPrimary"/>
-                    </LinearLayout>
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="Contrasena"
+                        android:textSize="13sp" android:textStyle="bold"
+                        android:textColor="@color/colorTextPrimary"/>
                     <EditText android:id="@+id/et_mqtt_pass"
                         android:layout_width="170dp" android:layout_height="wrap_content"
-                        android:hint="contraseña" android:textSize="12sp"
+                        android:hint="contrasena" android:textSize="12sp"
                         android:textColor="@color/colorTextPrimary"
                         android:background="@drawable/bg_schedule_time"
                         android:padding="10dp" android:gravity="end"
                         android:inputType="textPassword"/>
                 </LinearLayout>
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Sección: Topics -->
+        <!-- TOPICS MQTT -->
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="TOPICS MQTT" android:textSize="11sp" android:textStyle="bold"
             android:textColor="@color/colorTextSecondary" android:letterSpacing="0.08"
             android:layout_marginBottom="8dp"/>
-
         <androidx.cardview.widget.CardView android:layout_width="match_parent"
             android:layout_height="wrap_content" app:cardBackgroundColor="@color/colorCard"
             app:cardCornerRadius="18dp" app:cardElevation="2dp" android:layout_marginBottom="16dp">
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical">
-
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content"
@@ -168,10 +150,7 @@
                         android:padding="10dp" android:gravity="end"
                         android:inputType="text" android:singleLine="true"/>
                 </LinearLayout>
-
-                <View android:layout_width="match_parent" android:layout_height="1dp"
-                    android:background="@color/colorBorder"/>
-
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/colorBorder"/>
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content"
@@ -186,10 +165,7 @@
                         android:padding="10dp" android:gravity="end"
                         android:inputType="text" android:singleLine="true"/>
                 </LinearLayout>
-
-                <View android:layout_width="match_parent" android:layout_height="1dp"
-                    android:background="@color/colorBorder"/>
-
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/colorBorder"/>
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content"
@@ -204,30 +180,25 @@
                         android:padding="10dp" android:gravity="end"
                         android:inputType="text" android:singleLine="true"/>
                 </LinearLayout>
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Sección: Dispositivo -->
+        <!-- DISPOSITIVO -->
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="DISPOSITIVO" android:textSize="11sp" android:textStyle="bold"
             android:textColor="@color/colorTextSecondary" android:letterSpacing="0.08"
             android:layout_marginBottom="8dp"/>
-
         <androidx.cardview.widget.CardView android:layout_width="match_parent"
             android:layout_height="wrap_content" app:cardBackgroundColor="@color/colorCard"
             app:cardCornerRadius="18dp" app:cardElevation="2dp" android:layout_marginBottom="16dp">
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical">
-
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                        android:layout_weight="1" android:orientation="vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Nombre parcela" android:textSize="13sp" android:textStyle="bold"
-                            android:textColor="@color/colorTextPrimary"/>
-                    </LinearLayout>
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="Nombre parcela"
+                        android:textSize="13sp" android:textStyle="bold"
+                        android:textColor="@color/colorTextPrimary"/>
                     <EditText android:id="@+id/et_farm_name"
                         android:layout_width="160dp" android:layout_height="wrap_content"
                         android:text="Parcela Norte" android:textSize="12sp"
@@ -236,10 +207,7 @@
                         android:padding="10dp" android:gravity="end"
                         android:inputType="text" android:singleLine="true"/>
                 </LinearLayout>
-
-                <View android:layout_width="match_parent" android:layout_height="1dp"
-                    android:background="@color/colorBorder"/>
-
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/colorBorder"/>
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
@@ -248,7 +216,7 @@
                             android:text="Intervalo lectura" android:textSize="13sp" android:textStyle="bold"
                             android:textColor="@color/colorTextPrimary"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Segundos entre cada envío" android:textSize="11sp"
+                            android:text="Segundos entre cada envio" android:textSize="11sp"
                             android:textColor="@color/colorTextSecondary" android:layout_marginTop="2dp"/>
                     </LinearLayout>
                     <EditText android:id="@+id/et_interval"
@@ -259,16 +227,13 @@
                         android:padding="10dp" android:gravity="end"
                         android:inputType="number"/>
                 </LinearLayout>
-
-                <View android:layout_width="match_parent" android:layout_height="1dp"
-                    android:background="@color/colorBorder"/>
-
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/colorBorder"/>
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
                         android:layout_weight="1" android:orientation="vertical">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Capacidad depósito" android:textSize="13sp" android:textStyle="bold"
+                            android:text="Capacidad deposito" android:textSize="13sp" android:textStyle="bold"
                             android:textColor="@color/colorTextPrimary"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="Litros totales del tanque" android:textSize="11sp"
@@ -282,15 +247,46 @@
                         android:padding="10dp" android:gravity="end"
                         android:inputType="number"/>
                 </LinearLayout>
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Botón guardar -->
+        <!-- NOTIFICACIONES -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="NOTIFICACIONES" android:textSize="11sp" android:textStyle="bold"
+            android:textColor="@color/colorTextSecondary" android:letterSpacing="0.08"
+            android:layout_marginBottom="8dp"/>
+        <androidx.cardview.widget.CardView android:id="@+id/card_notificaciones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:cardBackgroundColor="@color/colorCard"
+            app:cardCornerRadius="18dp" app:cardElevation="2dp" android:layout_marginBottom="16dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp">
+                <androidx.cardview.widget.CardView android:layout_width="36dp" android:layout_height="36dp"
+                    app:cardBackgroundColor="#27AE60" app:cardCornerRadius="10dp" android:layout_marginEnd="14dp">
+                    <ImageView android:layout_width="18dp" android:layout_height="18dp"
+                        android:layout_gravity="center" android:src="@drawable/ic_notification"/>
+                </androidx.cardview.widget.CardView>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Gestionar notificaciones" android:textSize="13sp"
+                        android:textStyle="bold" android:textColor="@color/colorTextPrimary"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Activa o desactiva cada tipo de alerta"
+                        android:textSize="11sp" android:textColor="@color/colorTextSecondary"
+                        android:layout_marginTop="2dp"/>
+                </LinearLayout>
+                <ImageView android:layout_width="20dp" android:layout_height="20dp"
+                    android:src="@drawable/ic_settings"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Boton guardar -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_save_config"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="💾  Guardar configuración"
+            android:text="Guardar configuracion"
             android:textSize="15sp" android:textStyle="bold" android:textColor="@color/white"
             app:backgroundTint="@color/green_primary"
             android:paddingTop="14dp" android:paddingBottom="14dp"

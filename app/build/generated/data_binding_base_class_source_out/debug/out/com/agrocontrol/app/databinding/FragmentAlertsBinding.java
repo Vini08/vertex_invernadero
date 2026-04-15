@@ -4,7 +4,9 @@ package com.agrocontrol.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
@@ -20,6 +22,12 @@ public final class FragmentAlertsBinding implements ViewBinding {
   private final ScrollView rootView;
 
   @NonNull
+  public final LinearLayout emptyAlertas;
+
+  @NonNull
+  public final LinearLayout listAlertas;
+
+  @NonNull
   public final SwitchMaterial swAlertSoil;
 
   @NonNull
@@ -31,14 +39,21 @@ public final class FragmentAlertsBinding implements ViewBinding {
   @NonNull
   public final SwitchMaterial swAlertWifi;
 
-  private FragmentAlertsBinding(@NonNull ScrollView rootView, @NonNull SwitchMaterial swAlertSoil,
+  @NonNull
+  public final TextView tvAlertCount;
+
+  private FragmentAlertsBinding(@NonNull ScrollView rootView, @NonNull LinearLayout emptyAlertas,
+      @NonNull LinearLayout listAlertas, @NonNull SwitchMaterial swAlertSoil,
       @NonNull SwitchMaterial swAlertTank, @NonNull SwitchMaterial swAlertTemp,
-      @NonNull SwitchMaterial swAlertWifi) {
+      @NonNull SwitchMaterial swAlertWifi, @NonNull TextView tvAlertCount) {
     this.rootView = rootView;
+    this.emptyAlertas = emptyAlertas;
+    this.listAlertas = listAlertas;
     this.swAlertSoil = swAlertSoil;
     this.swAlertTank = swAlertTank;
     this.swAlertTemp = swAlertTemp;
     this.swAlertWifi = swAlertWifi;
+    this.tvAlertCount = tvAlertCount;
   }
 
   @Override
@@ -68,6 +83,18 @@ public final class FragmentAlertsBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.empty_alertas;
+      LinearLayout emptyAlertas = ViewBindings.findChildViewById(rootView, id);
+      if (emptyAlertas == null) {
+        break missingId;
+      }
+
+      id = R.id.list_alertas;
+      LinearLayout listAlertas = ViewBindings.findChildViewById(rootView, id);
+      if (listAlertas == null) {
+        break missingId;
+      }
+
       id = R.id.sw_alert_soil;
       SwitchMaterial swAlertSoil = ViewBindings.findChildViewById(rootView, id);
       if (swAlertSoil == null) {
@@ -92,8 +119,14 @@ public final class FragmentAlertsBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentAlertsBinding((ScrollView) rootView, swAlertSoil, swAlertTank, swAlertTemp,
-          swAlertWifi);
+      id = R.id.tv_alert_count;
+      TextView tvAlertCount = ViewBindings.findChildViewById(rootView, id);
+      if (tvAlertCount == null) {
+        break missingId;
+      }
+
+      return new FragmentAlertsBinding((ScrollView) rootView, emptyAlertas, listAlertas,
+          swAlertSoil, swAlertTank, swAlertTemp, swAlertWifi, tvAlertCount);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

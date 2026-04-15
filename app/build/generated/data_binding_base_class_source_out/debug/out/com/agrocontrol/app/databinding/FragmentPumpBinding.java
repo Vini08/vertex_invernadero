@@ -10,6 +10,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.agrocontrol.app.R;
@@ -24,6 +25,12 @@ public final class FragmentPumpBinding implements ViewBinding {
 
   @NonNull
   public final TextView badgeAuto;
+
+  @NonNull
+  public final CardView cardResumen;
+
+  @NonNull
+  public final CardView cardResumenDias;
 
   @NonNull
   public final LinearLayout pumpHeroBg;
@@ -47,22 +54,88 @@ public final class FragmentPumpBinding implements ViewBinding {
   public final TextView tvAutoStatus;
 
   @NonNull
+  public final TextView tvDiasBadge;
+
+  @NonNull
+  public final TextView tvDiasMinutos;
+
+  @NonNull
+  public final TextView tvDiasPromedio;
+
+  @NonNull
+  public final TextView tvDiasRiegos;
+
+  @NonNull
+  public final TextView tvMaxPumps;
+
+  @NonNull
   public final TextView tvPumpHeroSub;
 
   @NonNull
   public final TextView tvPumpTimer;
 
   @NonNull
+  public final TextView tvRiegoCount;
+
+  @NonNull
+  public final TextView tvSched1Duration;
+
+  @NonNull
+  public final TextView tvSched1Time;
+
+  @NonNull
+  public final LinearLayout tvSched1TimeContainer;
+
+  @NonNull
+  public final TextView tvSched2Duration;
+
+  @NonNull
+  public final TextView tvSched2Time;
+
+  @NonNull
+  public final LinearLayout tvSched2TimeContainer;
+
+  @NonNull
+  public final TextView tvSched3Duration;
+
+  @NonNull
+  public final TextView tvSched3Time;
+
+  @NonNull
+  public final LinearLayout tvSched3TimeContainer;
+
+  @NonNull
+  public final TextView tvSchedBadge;
+
+  @NonNull
   public final TextView tvThresholdVal;
 
+  @NonNull
+  public final TextView tvTiempoTotal;
+
+  @NonNull
+  public final TextView tvUltimoRiego;
+
   private FragmentPumpBinding(@NonNull ScrollView rootView, @NonNull TextView badgeAuto,
+      @NonNull CardView cardResumen, @NonNull CardView cardResumenDias,
       @NonNull LinearLayout pumpHeroBg, @NonNull SeekBar seekbarThreshold,
       @NonNull SwitchMaterial swPumpHero, @NonNull SwitchMaterial swSched1,
       @NonNull SwitchMaterial swSched2, @NonNull SwitchMaterial swSched3,
-      @NonNull TextView tvAutoStatus, @NonNull TextView tvPumpHeroSub,
-      @NonNull TextView tvPumpTimer, @NonNull TextView tvThresholdVal) {
+      @NonNull TextView tvAutoStatus, @NonNull TextView tvDiasBadge,
+      @NonNull TextView tvDiasMinutos, @NonNull TextView tvDiasPromedio,
+      @NonNull TextView tvDiasRiegos, @NonNull TextView tvMaxPumps, @NonNull TextView tvPumpHeroSub,
+      @NonNull TextView tvPumpTimer, @NonNull TextView tvRiegoCount,
+      @NonNull TextView tvSched1Duration, @NonNull TextView tvSched1Time,
+      @NonNull LinearLayout tvSched1TimeContainer, @NonNull TextView tvSched2Duration,
+      @NonNull TextView tvSched2Time, @NonNull LinearLayout tvSched2TimeContainer,
+      @NonNull TextView tvSched3Duration, @NonNull TextView tvSched3Time,
+      @NonNull LinearLayout tvSched3TimeContainer, @NonNull TextView tvSchedBadge,
+      @NonNull TextView tvThresholdVal, @NonNull TextView tvTiempoTotal,
+      @NonNull TextView tvUltimoRiego) {
     this.rootView = rootView;
     this.badgeAuto = badgeAuto;
+    this.cardResumen = cardResumen;
+    this.cardResumenDias = cardResumenDias;
     this.pumpHeroBg = pumpHeroBg;
     this.seekbarThreshold = seekbarThreshold;
     this.swPumpHero = swPumpHero;
@@ -70,9 +143,27 @@ public final class FragmentPumpBinding implements ViewBinding {
     this.swSched2 = swSched2;
     this.swSched3 = swSched3;
     this.tvAutoStatus = tvAutoStatus;
+    this.tvDiasBadge = tvDiasBadge;
+    this.tvDiasMinutos = tvDiasMinutos;
+    this.tvDiasPromedio = tvDiasPromedio;
+    this.tvDiasRiegos = tvDiasRiegos;
+    this.tvMaxPumps = tvMaxPumps;
     this.tvPumpHeroSub = tvPumpHeroSub;
     this.tvPumpTimer = tvPumpTimer;
+    this.tvRiegoCount = tvRiegoCount;
+    this.tvSched1Duration = tvSched1Duration;
+    this.tvSched1Time = tvSched1Time;
+    this.tvSched1TimeContainer = tvSched1TimeContainer;
+    this.tvSched2Duration = tvSched2Duration;
+    this.tvSched2Time = tvSched2Time;
+    this.tvSched2TimeContainer = tvSched2TimeContainer;
+    this.tvSched3Duration = tvSched3Duration;
+    this.tvSched3Time = tvSched3Time;
+    this.tvSched3TimeContainer = tvSched3TimeContainer;
+    this.tvSchedBadge = tvSchedBadge;
     this.tvThresholdVal = tvThresholdVal;
+    this.tvTiempoTotal = tvTiempoTotal;
+    this.tvUltimoRiego = tvUltimoRiego;
   }
 
   @Override
@@ -105,6 +196,18 @@ public final class FragmentPumpBinding implements ViewBinding {
       id = R.id.badge_auto;
       TextView badgeAuto = ViewBindings.findChildViewById(rootView, id);
       if (badgeAuto == null) {
+        break missingId;
+      }
+
+      id = R.id.card_resumen;
+      CardView cardResumen = ViewBindings.findChildViewById(rootView, id);
+      if (cardResumen == null) {
+        break missingId;
+      }
+
+      id = R.id.card_resumen_dias;
+      CardView cardResumenDias = ViewBindings.findChildViewById(rootView, id);
+      if (cardResumenDias == null) {
         break missingId;
       }
 
@@ -150,6 +253,36 @@ public final class FragmentPumpBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tv_dias_badge;
+      TextView tvDiasBadge = ViewBindings.findChildViewById(rootView, id);
+      if (tvDiasBadge == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_dias_minutos;
+      TextView tvDiasMinutos = ViewBindings.findChildViewById(rootView, id);
+      if (tvDiasMinutos == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_dias_promedio;
+      TextView tvDiasPromedio = ViewBindings.findChildViewById(rootView, id);
+      if (tvDiasPromedio == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_dias_riegos;
+      TextView tvDiasRiegos = ViewBindings.findChildViewById(rootView, id);
+      if (tvDiasRiegos == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_max_pumps;
+      TextView tvMaxPumps = ViewBindings.findChildViewById(rootView, id);
+      if (tvMaxPumps == null) {
+        break missingId;
+      }
+
       id = R.id.tv_pump_hero_sub;
       TextView tvPumpHeroSub = ViewBindings.findChildViewById(rootView, id);
       if (tvPumpHeroSub == null) {
@@ -162,15 +295,96 @@ public final class FragmentPumpBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tv_riego_count;
+      TextView tvRiegoCount = ViewBindings.findChildViewById(rootView, id);
+      if (tvRiegoCount == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_sched1_duration;
+      TextView tvSched1Duration = ViewBindings.findChildViewById(rootView, id);
+      if (tvSched1Duration == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_sched1_time;
+      TextView tvSched1Time = ViewBindings.findChildViewById(rootView, id);
+      if (tvSched1Time == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_sched1_time_container;
+      LinearLayout tvSched1TimeContainer = ViewBindings.findChildViewById(rootView, id);
+      if (tvSched1TimeContainer == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_sched2_duration;
+      TextView tvSched2Duration = ViewBindings.findChildViewById(rootView, id);
+      if (tvSched2Duration == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_sched2_time;
+      TextView tvSched2Time = ViewBindings.findChildViewById(rootView, id);
+      if (tvSched2Time == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_sched2_time_container;
+      LinearLayout tvSched2TimeContainer = ViewBindings.findChildViewById(rootView, id);
+      if (tvSched2TimeContainer == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_sched3_duration;
+      TextView tvSched3Duration = ViewBindings.findChildViewById(rootView, id);
+      if (tvSched3Duration == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_sched3_time;
+      TextView tvSched3Time = ViewBindings.findChildViewById(rootView, id);
+      if (tvSched3Time == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_sched3_time_container;
+      LinearLayout tvSched3TimeContainer = ViewBindings.findChildViewById(rootView, id);
+      if (tvSched3TimeContainer == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_sched_badge;
+      TextView tvSchedBadge = ViewBindings.findChildViewById(rootView, id);
+      if (tvSchedBadge == null) {
+        break missingId;
+      }
+
       id = R.id.tv_threshold_val;
       TextView tvThresholdVal = ViewBindings.findChildViewById(rootView, id);
       if (tvThresholdVal == null) {
         break missingId;
       }
 
-      return new FragmentPumpBinding((ScrollView) rootView, badgeAuto, pumpHeroBg, seekbarThreshold,
-          swPumpHero, swSched1, swSched2, swSched3, tvAutoStatus, tvPumpHeroSub, tvPumpTimer,
-          tvThresholdVal);
+      id = R.id.tv_tiempo_total;
+      TextView tvTiempoTotal = ViewBindings.findChildViewById(rootView, id);
+      if (tvTiempoTotal == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_ultimo_riego;
+      TextView tvUltimoRiego = ViewBindings.findChildViewById(rootView, id);
+      if (tvUltimoRiego == null) {
+        break missingId;
+      }
+
+      return new FragmentPumpBinding((ScrollView) rootView, badgeAuto, cardResumen, cardResumenDias,
+          pumpHeroBg, seekbarThreshold, swPumpHero, swSched1, swSched2, swSched3, tvAutoStatus,
+          tvDiasBadge, tvDiasMinutos, tvDiasPromedio, tvDiasRiegos, tvMaxPumps, tvPumpHeroSub,
+          tvPumpTimer, tvRiegoCount, tvSched1Duration, tvSched1Time, tvSched1TimeContainer,
+          tvSched2Duration, tvSched2Time, tvSched2TimeContainer, tvSched3Duration, tvSched3Time,
+          tvSched3TimeContainer, tvSchedBadge, tvThresholdVal, tvTiempoTotal, tvUltimoRiego);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

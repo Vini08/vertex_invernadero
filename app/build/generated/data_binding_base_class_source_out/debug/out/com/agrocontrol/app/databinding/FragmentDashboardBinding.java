@@ -9,6 +9,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.agrocontrol.app.R;
@@ -23,6 +24,9 @@ public final class FragmentDashboardBinding implements ViewBinding {
 
   @NonNull
   public final TextView badgeTank;
+
+  @NonNull
+  public final CardView cardPumpActive;
 
   @NonNull
   public final TextView chipAir;
@@ -70,6 +74,12 @@ public final class FragmentDashboardBinding implements ViewBinding {
   public final TextView tvPumpStatus;
 
   @NonNull
+  public final TextView tvPumpTimerDash;
+
+  @NonNull
+  public final TextView tvPumpTypeDash;
+
+  @NonNull
   public final TextView tvSoilHumidity;
 
   @NonNull
@@ -82,15 +92,17 @@ public final class FragmentDashboardBinding implements ViewBinding {
   public final TextView tvTemperature;
 
   private FragmentDashboardBinding(@NonNull ScrollView rootView, @NonNull TextView badgeTank,
-      @NonNull TextView chipAir, @NonNull TextView chipLight, @NonNull TextView chipSoil,
-      @NonNull TextView chipTemp, @NonNull ProgressBar progressTank, @NonNull SwitchMaterial swFan,
-      @NonNull SwitchMaterial swHeater, @NonNull SwitchMaterial swPump,
-      @NonNull TextView tvAirHumidity, @NonNull TextView tvEspSt, @NonNull TextView tvFanStatus,
-      @NonNull TextView tvHeaterStatus, @NonNull TextView tvLight, @NonNull TextView tvMqttSt,
-      @NonNull TextView tvPumpStatus, @NonNull TextView tvSoilHumidity, @NonNull TextView tvSync,
+      @NonNull CardView cardPumpActive, @NonNull TextView chipAir, @NonNull TextView chipLight,
+      @NonNull TextView chipSoil, @NonNull TextView chipTemp, @NonNull ProgressBar progressTank,
+      @NonNull SwitchMaterial swFan, @NonNull SwitchMaterial swHeater,
+      @NonNull SwitchMaterial swPump, @NonNull TextView tvAirHumidity, @NonNull TextView tvEspSt,
+      @NonNull TextView tvFanStatus, @NonNull TextView tvHeaterStatus, @NonNull TextView tvLight,
+      @NonNull TextView tvMqttSt, @NonNull TextView tvPumpStatus, @NonNull TextView tvPumpTimerDash,
+      @NonNull TextView tvPumpTypeDash, @NonNull TextView tvSoilHumidity, @NonNull TextView tvSync,
       @NonNull TextView tvTankValue, @NonNull TextView tvTemperature) {
     this.rootView = rootView;
     this.badgeTank = badgeTank;
+    this.cardPumpActive = cardPumpActive;
     this.chipAir = chipAir;
     this.chipLight = chipLight;
     this.chipSoil = chipSoil;
@@ -106,6 +118,8 @@ public final class FragmentDashboardBinding implements ViewBinding {
     this.tvLight = tvLight;
     this.tvMqttSt = tvMqttSt;
     this.tvPumpStatus = tvPumpStatus;
+    this.tvPumpTimerDash = tvPumpTimerDash;
+    this.tvPumpTypeDash = tvPumpTypeDash;
     this.tvSoilHumidity = tvSoilHumidity;
     this.tvSync = tvSync;
     this.tvTankValue = tvTankValue;
@@ -142,6 +156,12 @@ public final class FragmentDashboardBinding implements ViewBinding {
       id = R.id.badge_tank;
       TextView badgeTank = ViewBindings.findChildViewById(rootView, id);
       if (badgeTank == null) {
+        break missingId;
+      }
+
+      id = R.id.card_pump_active;
+      CardView cardPumpActive = ViewBindings.findChildViewById(rootView, id);
+      if (cardPumpActive == null) {
         break missingId;
       }
 
@@ -235,6 +255,18 @@ public final class FragmentDashboardBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tv_pump_timer_dash;
+      TextView tvPumpTimerDash = ViewBindings.findChildViewById(rootView, id);
+      if (tvPumpTimerDash == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_pump_type_dash;
+      TextView tvPumpTypeDash = ViewBindings.findChildViewById(rootView, id);
+      if (tvPumpTypeDash == null) {
+        break missingId;
+      }
+
       id = R.id.tv_soil_humidity;
       TextView tvSoilHumidity = ViewBindings.findChildViewById(rootView, id);
       if (tvSoilHumidity == null) {
@@ -259,10 +291,10 @@ public final class FragmentDashboardBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentDashboardBinding((ScrollView) rootView, badgeTank, chipAir, chipLight,
-          chipSoil, chipTemp, progressTank, swFan, swHeater, swPump, tvAirHumidity, tvEspSt,
-          tvFanStatus, tvHeaterStatus, tvLight, tvMqttSt, tvPumpStatus, tvSoilHumidity, tvSync,
-          tvTankValue, tvTemperature);
+      return new FragmentDashboardBinding((ScrollView) rootView, badgeTank, cardPumpActive, chipAir,
+          chipLight, chipSoil, chipTemp, progressTank, swFan, swHeater, swPump, tvAirHumidity,
+          tvEspSt, tvFanStatus, tvHeaterStatus, tvLight, tvMqttSt, tvPumpStatus, tvPumpTimerDash,
+          tvPumpTypeDash, tvSoilHumidity, tvSync, tvTankValue, tvTemperature);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

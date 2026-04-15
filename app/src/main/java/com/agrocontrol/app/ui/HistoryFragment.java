@@ -1,9 +1,9 @@
 package com.agrocontrol.app.ui;
 
-import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
-import android.widget.TextView;
+import android.widget.*;
 import androidx.annotation.*;
 import androidx.fragment.app.Fragment;
 import com.github.mikephil.charting.charts.BarChart;
@@ -13,20 +13,30 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.*;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.agrocontrol.app.R;
-import java.util.ArrayList;
-import java.util.List;
+import com.agrocontrol.app.api.ApiManager;
+import com.agrocontrol.app.model.RiegoManager;
+import com.agrocontrol.app.model.RiegoRecord;
+import com.agrocontrol.app.mqtt.MqttManager;
+import com.agrocontrol.app.mqtt.SensorData;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class HistoryFragment extends Fragment {
 
-    private LineChart chartSoil, chartTemp;
-    private BarChart chartPump;
+    private static final String TAG = "HistoryFragment";
 
-    // Datos simulados 24h
-    private final float[] soilData24h  = {55,52,48,43,40,45,68,72,74,70,67,65,62,60,63,68,70,69,66,63,61,64,67,68};
-    private final float[] tempData24h  = {22,21,20,21,22,24,26,28,30,32,34,34,33,31,30,31,32,33,33,32,30,28,26,24};
-    private final float[] pumpData7d   = {15,10,0,25,15,20,12};
-    private final String[] hours24     = {"00","02","04","06","08","10","12","14","16","18","20","22","24"};
-    private final String[] days7       = {"Lun","Mar","Mié","Jue","Vie","Sáb","Dom"};
+    private View contentSensores, contentRiegos;
+    private TextView tabSensores, tabRiegos;
+    private TextView period24h, period7d;
+    private TextView tvSoilPeriod, tvTempPeriod, tvResumenLabel;
+    private LinearLayout listRiegos, emptyRiegos;
+    private TextView tvTotalRiegos, tvRiegosTitle;
+    private LineChart chartSoil, chartTemp;
+    private BarChart chartRiegosDias;
+    private androidx.cardview.widget.CardView cardChartRiegos;
+    private TextView tvAvgSoil, tvAvgTemp;
+
+    private int riegosDays = 1;
 
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -39,215 +49,315 @@ public class HistoryFragment extends Fragment {
     public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
 
-        chartSoil = v.findViewById(R.id.chart_soil);
-        chartTemp = v.findViewById(R.id.chart_temp);
-        chartPump = v.findViewById(R.id.chart_pump);
+        contentSensores  = v.findViewById(R.id.content_sensores);
+        contentRiegos    = v.findViewById(R.id.content_riegos);
+        tabSensores      = v.findViewById(R.id.tab_sensores);
+        tabRiegos        = v.findViewById(R.id.tab_riegos);
+        period24h        = v.findViewById(R.id.period_24h);
+        period7d         = v.findViewById(R.id.period_7d);
+        tvSoilPeriod     = v.findViewById(R.id.tv_soil_period);
+        tvTempPeriod     = v.findViewById(R.id.tv_temp_period);
+        tvResumenLabel   = v.findViewById(R.id.tv_resumen_label);
+        chartSoil        = v.findViewById(R.id.chart_soil);
+        chartTemp        = v.findViewById(R.id.chart_temp);
+        chartRiegosDias  = v.findViewById(R.id.chart_riegos_dias);
+        cardChartRiegos  = v.findViewById(R.id.card_chart_riegos);
+        tvAvgSoil        = v.findViewById(R.id.tv_avg_soil);
+        tvAvgTemp        = v.findViewById(R.id.tv_avg_temp);
+        listRiegos       = v.findViewById(R.id.list_riegos);
+        emptyRiegos      = v.findViewById(R.id.empty_riegos);
+        tvTotalRiegos    = v.findViewById(R.id.tv_total_riegos);
+        tvRiegosTitle    = v.findViewById(R.id.tv_riegos_title);
 
-        // Calcular promedios
-        TextView tvAvgSoil = v.findViewById(R.id.tv_avg_soil);
-        TextView tvAvgTemp = v.findViewById(R.id.tv_avg_temp);
-        tvAvgSoil.setText((int) average(soilData24h) + "%");
-        tvAvgTemp.setText((int) average(tempData24h) + "°C");
+        tabSensores.setOnClickListener(view -> showMainTab(false));
+        tabRiegos.setOnClickListener(view -> showMainTab(true));
+        if (period24h != null) period24h.setOnClickListener(view -> selectPeriod(24));
+        if (period7d  != null) period7d.setOnClickListener(view  -> selectPeriod(168));
 
-        // Tabs humedad suelo
-        setupTabsSoil(v);
-        setupTabsTemp(v);
+        Bundle args = getArguments();
+        boolean openRiegos = args != null && args.getBoolean("show_riegos", false);
+        riegosDays = args != null ? args.getInt("days", 1) : 1;
 
-        // Dibujar gráficas
-        drawSoilChart(soilData24h, hours24);
-        drawTempChart(tempData24h, hours24);
-        drawPumpChart(pumpData7d, days7);
+        showMainTab(openRiegos);
+        if (!openRiegos) loadChartData("24h");
     }
 
-    // ─── Gráfica humedad suelo ───────────────────────────────────────────────
-    private void drawSoilChart(float[] data, String[] labels) {
-        List<Entry> entries = new ArrayList<>();
-        int step = data.length / labels.length;
-        for (int i = 0; i < data.length; i++) entries.add(new Entry(i, data[i]));
-
-        LineDataSet ds = new LineDataSet(entries, "Humedad suelo");
-        ds.setColor(0xFF2ECC71);
-        ds.setFillColor(0xFF2ECC71);
-        ds.setFillAlpha(30);
-        ds.setDrawFilled(true);
-        ds.setDrawCircles(false);
-        ds.setLineWidth(2.5f);
-        ds.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        ds.setDrawValues(false);
-
-        styleLineChart(chartSoil, new LineData(ds), labels, step, 0, 100, "%");
+    private void showMainTab(boolean riegos) {
+        if (contentSensores == null || contentRiegos == null) return;
+        if (riegos) {
+            contentSensores.setVisibility(View.GONE);
+            contentRiegos.setVisibility(View.VISIBLE);
+            tabRiegos.setTextColor(getResources().getColor(R.color.chipOkText, null));
+            tabRiegos.setBackgroundResource(R.drawable.bg_chip_ok);
+            tabSensores.setTextColor(getResources().getColor(R.color.colorTextSecondary, null));
+            tabSensores.setBackground(null);
+            loadRiegosFromApi();
+        } else {
+            contentRiegos.setVisibility(View.GONE);
+            contentSensores.setVisibility(View.VISIBLE);
+            tabSensores.setTextColor(getResources().getColor(R.color.chipOkText, null));
+            tabSensores.setBackgroundResource(R.drawable.bg_chip_ok);
+            tabRiegos.setTextColor(getResources().getColor(R.color.colorTextSecondary, null));
+            tabRiegos.setBackground(null);
+            loadChartData("24h");
+        }
     }
 
-    // ─── Gráfica temperatura ─────────────────────────────────────────────────
-    private void drawTempChart(float[] data, String[] labels) {
-        List<Entry> entries = new ArrayList<>();
-        int step = data.length / labels.length;
-        for (int i = 0; i < data.length; i++) entries.add(new Entry(i, data[i]));
-
-        LineDataSet ds = new LineDataSet(entries, "Temperatura");
-        ds.setColor(0xFFF39C12);
-        ds.setFillColor(0xFFF39C12);
-        ds.setFillAlpha(30);
-        ds.setDrawFilled(true);
-        ds.setDrawCircles(false);
-        ds.setLineWidth(2.5f);
-        ds.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        ds.setDrawValues(false);
-
-        styleLineChart(chartTemp, new LineData(ds), labels, step, 0, 50, "°C");
+    private void selectPeriod(int hours) {
+        boolean is24h = hours == 24;
+        if (period24h != null && period7d != null) {
+            if (is24h) {
+                period24h.setTextColor(getResources().getColor(R.color.chipOkText, null));
+                period24h.setBackgroundResource(R.drawable.bg_chip_ok);
+                period7d.setTextColor(getResources().getColor(R.color.colorTextSecondary, null));
+                period7d.setBackground(null);
+            } else {
+                period7d.setTextColor(getResources().getColor(R.color.chipOkText, null));
+                period7d.setBackgroundResource(R.drawable.bg_chip_ok);
+                period24h.setTextColor(getResources().getColor(R.color.colorTextSecondary, null));
+                period24h.setBackground(null);
+            }
+        }
+        if (tvSoilPeriod  != null) tvSoilPeriod.setText(is24h ? "Ultimas 24h" : "Ultimos 7 dias");
+        if (tvTempPeriod  != null) tvTempPeriod.setText(is24h ? "Ultimas 24h" : "Ultimos 7 dias");
+        if (tvAvgSoil     != null) tvAvgSoil.setText("...");
+        if (tvAvgTemp     != null) tvAvgTemp.setText("...");
+        loadChartData(is24h ? "24h" : "7d");
     }
 
-    // ─── Gráfica barras riego ────────────────────────────────────────────────
-    private void drawPumpChart(float[] data, String[] labels) {
+    private void loadChartData(String period) {
+        if (chartSoil == null) return;
+        ApiManager.getInstance().getChartData(period,
+            data -> {
+                if (!isAdded()) return;
+                if (tvAvgSoil != null) tvAvgSoil.setText((int)data.avgSoil + "%");
+                if (tvAvgTemp != null) tvAvgTemp.setText((int)data.avgTemp + "C");
+                if (!data.labels.isEmpty()) {
+                    String[] labels = data.labels.toArray(new String[0]);
+                    float[] soilArr = new float[data.soilValues.size()];
+                    float[] tempArr = new float[data.tempValues.size()];
+                    for (int i=0; i<soilArr.length; i++) soilArr[i] = data.soilValues.get(i);
+                    for (int i=0; i<tempArr.length; i++) tempArr[i] = data.tempValues.get(i);
+                    drawLineChart(chartSoil, soilArr, labels, 0xFF2ECC71, 0, 100);
+                    // Ocultar grafica temperatura si datos son 0 (sin sensor DHT11)
+                    if (data.avgTemp > 0) {
+                        if (chartTemp != null) chartTemp.setVisibility(View.VISIBLE);
+                        drawLineChart(chartTemp, tempArr, labels, 0xFFF39C12, 0, 50);
+                        if (tvAvgTemp != null) tvAvgTemp.setText((int)data.avgTemp + "C");
+                    } else {
+                        if (chartTemp != null) chartTemp.setVisibility(View.GONE);
+                        if (tvTempPeriod != null) tvTempPeriod.setVisibility(View.GONE);
+                        if (tvAvgTemp != null) tvAvgTemp.setText("Sin sensor");
+                    }
+                }
+            },
+            err -> {
+                if (!isAdded()) return;
+                SensorData last = MqttManager.getInstance().getLastData();
+                if (last != null) {
+                    if (tvAvgSoil != null) tvAvgSoil.setText((int)last.soil + "%");
+                    if (tvAvgTemp != null) tvAvgTemp.setText((int)last.temp + "C");
+                }
+            }
+        );
+    }
+
+    private void loadRiegosFromApi() {
+        if (listRiegos == null) return;
+        listRiegos.removeAllViews();
+        if (emptyRiegos  != null) emptyRiegos.setVisibility(View.GONE);
+        if (tvTotalRiegos != null) tvTotalRiegos.setText("Cargando...");
+        if (tvRiegosTitle != null)
+            tvRiegosTitle.setText(riegosDays == 1 ? "Riegos de hoy" : "Riegos ultimos " + riegosDays + " dias");
+
+        ApiManager.getInstance().getRiegos(riegosDays,
+            (riegos, totalMin) -> {
+                if (!isAdded()) return;
+                renderRiegos(new ArrayList<>(riegos), totalMin);
+                // Grafica de barras solo para 7 dias
+                if (riegosDays > 1) drawBarChart(riegos);
+            },
+            err -> {
+                if (!isAdded()) return;
+                if (emptyRiegos  != null) emptyRiegos.setVisibility(View.VISIBLE);
+                if (tvTotalRiegos != null) tvTotalRiegos.setText("Sin conexion");
+            }
+        );
+    }
+
+    // ─── Grafica de barras: riegos por dia ────────────────────────────────────
+    private void drawBarChart(List<RiegoRecord> riegos) {
+        if (chartRiegosDias == null || !isAdded()) return;
+
+        // Agrupar riegos por fecha
+        Map<String, Integer> countByDay = new LinkedHashMap<>();
+        // Inicializar ultimos 7 dias
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM", Locale.getDefault());
+        Calendar cal = Calendar.getInstance();
+        String[] dayLabels = new String[7];
+        for (int i = 6; i >= 0; i--) {
+            cal = Calendar.getInstance();
+            cal.add(Calendar.DAY_OF_YEAR, -i);
+            String label = sdf.format(cal.getTime());
+            dayLabels[6 - i] = label;
+            countByDay.put(label, 0);
+        }
+
+        for (RiegoRecord r : riegos) {
+            if (r.fecha == null || r.fecha.isEmpty()) continue;
+            // fecha viene como "DD/MM/YYYY", convertir a "DD/MM"
+            String[] partes = r.fecha.split("/");
+            if (partes.length >= 2) {
+                String key = partes[0] + "/" + partes[1];
+                if (countByDay.containsKey(key))
+                    countByDay.put(key, countByDay.get(key) + 1);
+            }
+        }
+
         List<BarEntry> entries = new ArrayList<>();
-        for (int i = 0; i < data.length; i++) entries.add(new BarEntry(i, data[i]));
+        String[] labels = countByDay.keySet().toArray(new String[0]);
+        int idx = 0;
+        for (Map.Entry<String, Integer> e : countByDay.entrySet()) {
+            entries.add(new BarEntry(idx++, e.getValue()));
+        }
 
-        BarDataSet ds = new BarDataSet(entries, "Minutos");
-        ds.setColor(0xFF4A90E2);
-        ds.setDrawValues(false);
+        BarDataSet ds = new BarDataSet(entries, "Riegos por dia");
+        ds.setColor(0xFF2874CC);
+        ds.setValueTextColor(isDarkMode() ? 0xFFFFFFFF : 0xFF333333);
+        ds.setValueTextSize(10f);
 
         BarData barData = new BarData(ds);
         barData.setBarWidth(0.6f);
-        chartPump.setData(barData);
 
         boolean dark = isDarkMode();
         int textColor = dark ? 0xFF7A90B0 : 0xFF6B7A99;
-        int gridColor = dark ? 0x15FFFFFF : 0x15000000;
         int bgColor   = dark ? 0xFF1A2B3C : 0xFFFFFFFF;
 
-        chartPump.setBackgroundColor(bgColor);
-        chartPump.getDescription().setEnabled(false);
-        chartPump.getLegend().setEnabled(false);
-        chartPump.setDrawGridBackground(false);
-        chartPump.setDrawBorders(false);
-        chartPump.setTouchEnabled(false);
-        chartPump.animateY(800);
+        chartRiegosDias.setData(barData);
+        chartRiegosDias.setBackgroundColor(bgColor);
+        chartRiegosDias.getDescription().setEnabled(false);
+        chartRiegosDias.getLegend().setEnabled(false);
+        chartRiegosDias.setDrawGridBackground(false);
+        chartRiegosDias.setDrawBorders(false);
+        chartRiegosDias.setTouchEnabled(false);
+        chartRiegosDias.animateY(600);
 
-        XAxis xAxis = chartPump.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextColor(textColor);
-        xAxis.setTextSize(10f);
-        xAxis.setDrawGridLines(false);
-        xAxis.setDrawAxisLine(false);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
-        xAxis.setGranularity(1f);
+        XAxis x = chartRiegosDias.getXAxis();
+        x.setPosition(XAxis.XAxisPosition.BOTTOM);
+        x.setTextColor(textColor); x.setTextSize(9f);
+        x.setDrawGridLines(false); x.setDrawAxisLine(false);
+        x.setGranularity(1f); x.setLabelCount(7);
+        x.setValueFormatter(new IndexAxisValueFormatter(labels));
 
-        YAxis left = chartPump.getAxisLeft();
-        left.setTextColor(textColor);
-        left.setTextSize(10f);
-        left.setGridColor(gridColor);
-        left.setDrawAxisLine(false);
-        left.setAxisMinimum(0f);
-
-        chartPump.getAxisRight().setEnabled(false);
-        chartPump.invalidate();
+        YAxis left = chartRiegosDias.getAxisLeft();
+        left.setTextColor(textColor); left.setTextSize(9f);
+        left.setDrawGridLines(true); left.setDrawAxisLine(false);
+        left.setAxisMinimum(0f); left.setGranularity(1f);
+        chartRiegosDias.getAxisRight().setEnabled(false);
+        chartRiegosDias.invalidate();
+        chartRiegosDias.setVisibility(View.VISIBLE);
+        if (cardChartRiegos != null) cardChartRiegos.setVisibility(View.VISIBLE);
     }
 
-    // ─── Estilo común LineChart ──────────────────────────────────────────────
-    private void styleLineChart(LineChart chart, LineData data,
-                                 String[] labels, int step,
-                                 float yMin, float yMax, String unit) {
-        boolean dark = isDarkMode();
-        int textColor = dark ? 0xFF7A90B0 : 0xFF6B7A99;
-        int gridColor = dark ? 0x15FFFFFF : 0x15000000;
-        int bgColor   = dark ? 0xFF1A2B3C : 0xFFFFFFFF;
+    private void renderRiegos(List<RiegoRecord> riegos, int totalMin) {
+        if (listRiegos == null || !isAdded()) return;
+        listRiegos.removeAllViews();
+        if (riegos.isEmpty()) {
+            if (emptyRiegos  != null) emptyRiegos.setVisibility(View.VISIBLE);
+            if (tvTotalRiegos != null) tvTotalRiegos.setText("0 riegos - 0 min");
+            return;
+        }
+        if (emptyRiegos  != null) emptyRiegos.setVisibility(View.GONE);
+        int total = totalMin;
+        if (total == 0) for (RiegoRecord r : riegos) total += r.minutos;
+        if (tvTotalRiegos != null)
+            tvTotalRiegos.setText(riegos.size() + " riegos - " + total + " min");
 
-        chart.setData(data);
-        chart.setBackgroundColor(bgColor);
-        chart.getDescription().setEnabled(false);
-        chart.getLegend().setEnabled(false);
-        chart.setDrawGridBackground(false);
-        chart.setDrawBorders(false);
-        chart.setTouchEnabled(true);
-        chart.setScaleEnabled(false);
-        chart.animateX(600);
+        for (RiegoRecord riego : riegos) {
+            View item = LayoutInflater.from(requireContext())
+                .inflate(R.layout.item_riego, listRiegos, false);
+            TextView tvTipo     = item.findViewById(R.id.tv_tipo);
+            TextView tvBadge    = item.findViewById(R.id.tv_tipo_badge);
+            TextView tvHora     = item.findViewById(R.id.tv_hora);
+            TextView tvDuracion = item.findViewById(R.id.tv_duracion);
+            TextView tvHumedad  = item.findViewById(R.id.tv_humedad);
+            TextView tvMinBig   = item.findViewById(R.id.tv_min_big);
+            androidx.cardview.widget.CardView cvIcon = item.findViewById(R.id.cv_tipo_icon);
 
-        XAxis xAxis = chart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextColor(textColor);
-        xAxis.setTextSize(10f);
-        xAxis.setDrawGridLines(false);
-        xAxis.setDrawAxisLine(false);
-        xAxis.setLabelCount(labels.length, true);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels) {
-            @Override
-            public String getFormattedValue(float value) {
-                int idx = (int)(value / step);
-                if (idx >= 0 && idx < labels.length) return labels[idx];
-                return "";
+            tvTipo.setText(riego.getTipoLabel());
+
+            // Fecha para historial multi-dia
+            String horaDisplay;
+            if (riegosDays > 1 && riego.fecha != null && !riego.fecha.isEmpty()) {
+                String[] partes = riego.fecha.split("/");
+                String fechaCorta = partes.length >= 2 ? partes[0] + "/" + partes[1] : riego.fecha;
+                horaDisplay = fechaCorta + " " + riego.hora;
+            } else {
+                horaDisplay = riego.hora;
             }
-        });
+            tvHora.setText(horaDisplay);
 
+            // Duracion completa MM:SS
+            String durStr = (riego.duracion != null && !riego.duracion.isEmpty())
+                ? riego.duracion : riego.minutos + ":00";
+            tvDuracion.setText(durStr);
+            tvMinBig.setText(durStr);
+            tvHumedad.setText((int)riego.humedadInicio + "%");
+
+            switch (riego.tipo) {
+                case "AUTO":
+                    cvIcon.setCardBackgroundColor(0xFF27AE60);
+                    tvBadge.setText("AUTO");
+                    tvBadge.setTextColor(getResources().getColor(R.color.chipOkText, null));
+                    tvBadge.setBackgroundResource(R.drawable.bg_chip_ok);
+                    tvMinBig.setTextColor(getResources().getColor(R.color.green_primary, null));
+                    break;
+                case "MANUAL":
+                    cvIcon.setCardBackgroundColor(0xFF2874CC);
+                    tvBadge.setText("MANUAL");
+                    tvBadge.setTextColor(getResources().getColor(R.color.chipInfoText, null));
+                    tvBadge.setBackgroundResource(R.drawable.bg_chip_info);
+                    tvMinBig.setTextColor(getResources().getColor(R.color.chipInfoText, null));
+                    break;
+                case "PROGRAMADO":
+                    cvIcon.setCardBackgroundColor(0xFFD68910);
+                    tvBadge.setText("PROG.");
+                    tvBadge.setTextColor(getResources().getColor(R.color.chipWarnText, null));
+                    tvBadge.setBackgroundResource(R.drawable.bg_chip_warn);
+                    tvMinBig.setTextColor(getResources().getColor(R.color.chipWarnText, null));
+                    break;
+            }
+            listRiegos.addView(item);
+        }
+    }
+
+    private void drawLineChart(LineChart chart, float[] data, String[] labels, int color, float yMin, float yMax) {
+        if (data == null || data.length == 0 || chart == null) return;
+        List<Entry> entries = new ArrayList<>();
+        for (int i=0; i<data.length; i++) entries.add(new Entry(i, data[i]));
+        LineDataSet ds = new LineDataSet(entries, "");
+        ds.setColor(color); ds.setFillColor(color); ds.setFillAlpha(30);
+        ds.setDrawFilled(true); ds.setDrawCircles(data.length <= 10);
+        ds.setCircleColor(color); ds.setCircleRadius(3f);
+        ds.setLineWidth(2.5f); ds.setMode(LineDataSet.Mode.CUBIC_BEZIER); ds.setDrawValues(false);
+        boolean dark = isDarkMode();
+        int textColor = dark ? 0xFF7A90B0 : 0xFF6B7A99;
+        int gridColor = dark ? 0x15FFFFFF : 0x15000000;
+        int bgColor   = dark ? 0xFF1A2B3C : 0xFFFFFFFF;
+        chart.setData(new LineData(ds));
+        chart.setBackgroundColor(bgColor);
+        chart.getDescription().setEnabled(false); chart.getLegend().setEnabled(false);
+        chart.setDrawGridBackground(false); chart.setDrawBorders(false);
+        chart.setTouchEnabled(true); chart.setScaleEnabled(true); chart.animateX(500);
+        XAxis x = chart.getXAxis();
+        x.setPosition(XAxis.XAxisPosition.BOTTOM); x.setTextColor(textColor); x.setTextSize(9f);
+        x.setDrawGridLines(false); x.setDrawAxisLine(false);
+        x.setLabelCount(Math.min(labels.length, 7), false); x.setGranularity(1f);
+        x.setValueFormatter(new IndexAxisValueFormatter(labels));
         YAxis left = chart.getAxisLeft();
-        left.setTextColor(textColor);
-        left.setTextSize(10f);
-        left.setGridColor(gridColor);
-        left.setDrawAxisLine(false);
-        left.setAxisMinimum(yMin);
-        left.setAxisMaximum(yMax);
-
-        chart.getAxisRight().setEnabled(false);
-        chart.invalidate();
-    }
-
-    // ─── Tabs interactivos ───────────────────────────────────────────────────
-    private void setupTabsSoil(View v) {
-        TextView t24 = v.findViewById(R.id.tab_soil_24h);
-        TextView t7d = v.findViewById(R.id.tab_soil_7d);
-        TextView t30d= v.findViewById(R.id.tab_soil_30d);
-
-        t24.setOnClickListener(view -> {
-            setTabActive(t24, true,  R.color.chipOkText,  R.drawable.bg_chip_ok);
-            setTabActive(t7d, false, R.color.colorTextSecondary, 0);
-            setTabActive(t30d,false, R.color.colorTextSecondary, 0);
-            drawSoilChart(soilData24h, hours24);
-        });
-        t7d.setOnClickListener(view -> {
-            setTabActive(t24, false, R.color.colorTextSecondary, 0);
-            setTabActive(t7d, true,  R.color.chipOkText, R.drawable.bg_chip_ok);
-            setTabActive(t30d,false, R.color.colorTextSecondary, 0);
-            float[] d7 = {68,65,70,72,60,58,68};
-            drawSoilChart(d7, days7);
-        });
-        t30d.setOnClickListener(view -> {
-            setTabActive(t24, false, R.color.colorTextSecondary, 0);
-            setTabActive(t7d, false, R.color.colorTextSecondary, 0);
-            setTabActive(t30d,true,  R.color.chipOkText, R.drawable.bg_chip_ok);
-            float[] d30 = {60,62,65,68,70,67,64,61,58,62,65,68,70,72,69,66,63,61,64,67,68,65,62,60,63,67,70,68,65,62};
-            String[] lbls30 = new String[d30.length];
-            for(int i=0;i<d30.length;i++) lbls30[i] = (i+1)+"";
-            drawSoilChart(d30, lbls30);
-        });
-    }
-
-    private void setupTabsTemp(View v) {
-        TextView t24 = v.findViewById(R.id.tab_temp_24h);
-        TextView t7d = v.findViewById(R.id.tab_temp_7d);
-
-        t24.setOnClickListener(view -> {
-            setTabActive(t24, true,  R.color.chipWarnText, R.drawable.bg_chip_warn);
-            setTabActive(t7d, false, R.color.colorTextSecondary, 0);
-            drawTempChart(tempData24h, hours24);
-        });
-        t7d.setOnClickListener(view -> {
-            setTabActive(t24, false, R.color.colorTextSecondary, 0);
-            setTabActive(t7d, true,  R.color.chipWarnText, R.drawable.bg_chip_warn);
-            float[] d7 = {28,30,27,32,34,29,26};
-            drawTempChart(d7, days7);
-        });
-    }
-
-    private void setTabActive(TextView tab, boolean active, int colorRes, int bgRes) {
-        tab.setTextColor(getResources().getColor(colorRes, null));
-        if (active && bgRes != 0) tab.setBackgroundResource(bgRes);
-        else tab.setBackground(null);
-    }
-
-    // ─── Helpers ─────────────────────────────────────────────────────────────
-    private float average(float[] data) {
-        float sum = 0;
-        for (float v : data) sum += v;
-        return sum / data.length;
+        left.setTextColor(textColor); left.setTextSize(10f); left.setGridColor(gridColor);
+        left.setDrawAxisLine(false); left.setAxisMinimum(yMin); left.setAxisMaximum(yMax);
+        chart.getAxisRight().setEnabled(false); chart.invalidate();
     }
 
     private boolean isDarkMode() {

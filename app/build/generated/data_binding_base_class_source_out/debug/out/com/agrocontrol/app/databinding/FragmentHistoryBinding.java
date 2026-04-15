@@ -5,10 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.agrocontrol.app.R;
@@ -20,10 +20,13 @@ import java.lang.String;
 
 public final class FragmentHistoryBinding implements ViewBinding {
   @NonNull
-  private final ScrollView rootView;
+  private final LinearLayout rootView;
 
   @NonNull
-  public final BarChart chartPump;
+  public final CardView cardChartRiegos;
+
+  @NonNull
+  public final BarChart chartRiegosDias;
 
   @NonNull
   public final LineChart chartSoil;
@@ -32,25 +35,28 @@ public final class FragmentHistoryBinding implements ViewBinding {
   public final LineChart chartTemp;
 
   @NonNull
-  public final TextView tabSoil24h;
+  public final LinearLayout contentRiegos;
 
   @NonNull
-  public final TextView tabSoil30d;
+  public final LinearLayout contentSensores;
 
   @NonNull
-  public final TextView tabSoil7d;
+  public final LinearLayout emptyRiegos;
 
   @NonNull
-  public final TextView tabTemp24h;
+  public final LinearLayout listRiegos;
 
   @NonNull
-  public final TextView tabTemp7d;
+  public final TextView period24h;
 
   @NonNull
-  public final LinearLayout tabsSoil;
+  public final TextView period7d;
 
   @NonNull
-  public final LinearLayout tabsTemp;
+  public final TextView tabRiegos;
+
+  @NonNull
+  public final TextView tabSensores;
 
   @NonNull
   public final TextView tvAvgSoil;
@@ -58,29 +64,55 @@ public final class FragmentHistoryBinding implements ViewBinding {
   @NonNull
   public final TextView tvAvgTemp;
 
-  private FragmentHistoryBinding(@NonNull ScrollView rootView, @NonNull BarChart chartPump,
-      @NonNull LineChart chartSoil, @NonNull LineChart chartTemp, @NonNull TextView tabSoil24h,
-      @NonNull TextView tabSoil30d, @NonNull TextView tabSoil7d, @NonNull TextView tabTemp24h,
-      @NonNull TextView tabTemp7d, @NonNull LinearLayout tabsSoil, @NonNull LinearLayout tabsTemp,
-      @NonNull TextView tvAvgSoil, @NonNull TextView tvAvgTemp) {
+  @NonNull
+  public final TextView tvResumenLabel;
+
+  @NonNull
+  public final TextView tvRiegosTitle;
+
+  @NonNull
+  public final TextView tvSoilPeriod;
+
+  @NonNull
+  public final TextView tvTempPeriod;
+
+  @NonNull
+  public final TextView tvTotalRiegos;
+
+  private FragmentHistoryBinding(@NonNull LinearLayout rootView, @NonNull CardView cardChartRiegos,
+      @NonNull BarChart chartRiegosDias, @NonNull LineChart chartSoil, @NonNull LineChart chartTemp,
+      @NonNull LinearLayout contentRiegos, @NonNull LinearLayout contentSensores,
+      @NonNull LinearLayout emptyRiegos, @NonNull LinearLayout listRiegos,
+      @NonNull TextView period24h, @NonNull TextView period7d, @NonNull TextView tabRiegos,
+      @NonNull TextView tabSensores, @NonNull TextView tvAvgSoil, @NonNull TextView tvAvgTemp,
+      @NonNull TextView tvResumenLabel, @NonNull TextView tvRiegosTitle,
+      @NonNull TextView tvSoilPeriod, @NonNull TextView tvTempPeriod,
+      @NonNull TextView tvTotalRiegos) {
     this.rootView = rootView;
-    this.chartPump = chartPump;
+    this.cardChartRiegos = cardChartRiegos;
+    this.chartRiegosDias = chartRiegosDias;
     this.chartSoil = chartSoil;
     this.chartTemp = chartTemp;
-    this.tabSoil24h = tabSoil24h;
-    this.tabSoil30d = tabSoil30d;
-    this.tabSoil7d = tabSoil7d;
-    this.tabTemp24h = tabTemp24h;
-    this.tabTemp7d = tabTemp7d;
-    this.tabsSoil = tabsSoil;
-    this.tabsTemp = tabsTemp;
+    this.contentRiegos = contentRiegos;
+    this.contentSensores = contentSensores;
+    this.emptyRiegos = emptyRiegos;
+    this.listRiegos = listRiegos;
+    this.period24h = period24h;
+    this.period7d = period7d;
+    this.tabRiegos = tabRiegos;
+    this.tabSensores = tabSensores;
     this.tvAvgSoil = tvAvgSoil;
     this.tvAvgTemp = tvAvgTemp;
+    this.tvResumenLabel = tvResumenLabel;
+    this.tvRiegosTitle = tvRiegosTitle;
+    this.tvSoilPeriod = tvSoilPeriod;
+    this.tvTempPeriod = tvTempPeriod;
+    this.tvTotalRiegos = tvTotalRiegos;
   }
 
   @Override
   @NonNull
-  public ScrollView getRoot() {
+  public LinearLayout getRoot() {
     return rootView;
   }
 
@@ -105,9 +137,15 @@ public final class FragmentHistoryBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.chart_pump;
-      BarChart chartPump = ViewBindings.findChildViewById(rootView, id);
-      if (chartPump == null) {
+      id = R.id.card_chart_riegos;
+      CardView cardChartRiegos = ViewBindings.findChildViewById(rootView, id);
+      if (cardChartRiegos == null) {
+        break missingId;
+      }
+
+      id = R.id.chart_riegos_dias;
+      BarChart chartRiegosDias = ViewBindings.findChildViewById(rootView, id);
+      if (chartRiegosDias == null) {
         break missingId;
       }
 
@@ -123,45 +161,51 @@ public final class FragmentHistoryBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.tab_soil_24h;
-      TextView tabSoil24h = ViewBindings.findChildViewById(rootView, id);
-      if (tabSoil24h == null) {
+      id = R.id.content_riegos;
+      LinearLayout contentRiegos = ViewBindings.findChildViewById(rootView, id);
+      if (contentRiegos == null) {
         break missingId;
       }
 
-      id = R.id.tab_soil_30d;
-      TextView tabSoil30d = ViewBindings.findChildViewById(rootView, id);
-      if (tabSoil30d == null) {
+      id = R.id.content_sensores;
+      LinearLayout contentSensores = ViewBindings.findChildViewById(rootView, id);
+      if (contentSensores == null) {
         break missingId;
       }
 
-      id = R.id.tab_soil_7d;
-      TextView tabSoil7d = ViewBindings.findChildViewById(rootView, id);
-      if (tabSoil7d == null) {
+      id = R.id.empty_riegos;
+      LinearLayout emptyRiegos = ViewBindings.findChildViewById(rootView, id);
+      if (emptyRiegos == null) {
         break missingId;
       }
 
-      id = R.id.tab_temp_24h;
-      TextView tabTemp24h = ViewBindings.findChildViewById(rootView, id);
-      if (tabTemp24h == null) {
+      id = R.id.list_riegos;
+      LinearLayout listRiegos = ViewBindings.findChildViewById(rootView, id);
+      if (listRiegos == null) {
         break missingId;
       }
 
-      id = R.id.tab_temp_7d;
-      TextView tabTemp7d = ViewBindings.findChildViewById(rootView, id);
-      if (tabTemp7d == null) {
+      id = R.id.period_24h;
+      TextView period24h = ViewBindings.findChildViewById(rootView, id);
+      if (period24h == null) {
         break missingId;
       }
 
-      id = R.id.tabs_soil;
-      LinearLayout tabsSoil = ViewBindings.findChildViewById(rootView, id);
-      if (tabsSoil == null) {
+      id = R.id.period_7d;
+      TextView period7d = ViewBindings.findChildViewById(rootView, id);
+      if (period7d == null) {
         break missingId;
       }
 
-      id = R.id.tabs_temp;
-      LinearLayout tabsTemp = ViewBindings.findChildViewById(rootView, id);
-      if (tabsTemp == null) {
+      id = R.id.tab_riegos;
+      TextView tabRiegos = ViewBindings.findChildViewById(rootView, id);
+      if (tabRiegos == null) {
+        break missingId;
+      }
+
+      id = R.id.tab_sensores;
+      TextView tabSensores = ViewBindings.findChildViewById(rootView, id);
+      if (tabSensores == null) {
         break missingId;
       }
 
@@ -177,9 +221,40 @@ public final class FragmentHistoryBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentHistoryBinding((ScrollView) rootView, chartPump, chartSoil, chartTemp,
-          tabSoil24h, tabSoil30d, tabSoil7d, tabTemp24h, tabTemp7d, tabsSoil, tabsTemp, tvAvgSoil,
-          tvAvgTemp);
+      id = R.id.tv_resumen_label;
+      TextView tvResumenLabel = ViewBindings.findChildViewById(rootView, id);
+      if (tvResumenLabel == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_riegos_title;
+      TextView tvRiegosTitle = ViewBindings.findChildViewById(rootView, id);
+      if (tvRiegosTitle == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_soil_period;
+      TextView tvSoilPeriod = ViewBindings.findChildViewById(rootView, id);
+      if (tvSoilPeriod == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_temp_period;
+      TextView tvTempPeriod = ViewBindings.findChildViewById(rootView, id);
+      if (tvTempPeriod == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_total_riegos;
+      TextView tvTotalRiegos = ViewBindings.findChildViewById(rootView, id);
+      if (tvTotalRiegos == null) {
+        break missingId;
+      }
+
+      return new FragmentHistoryBinding((LinearLayout) rootView, cardChartRiegos, chartRiegosDias,
+          chartSoil, chartTemp, contentRiegos, contentSensores, emptyRiegos, listRiegos, period24h,
+          period7d, tabRiegos, tabSensores, tvAvgSoil, tvAvgTemp, tvResumenLabel, tvRiegosTitle,
+          tvSoilPeriod, tvTempPeriod, tvTotalRiegos);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));
