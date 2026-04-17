@@ -14,8 +14,6 @@ import com.agrocontrol.app.api.ApiManager;
 import com.agrocontrol.app.mqtt.MqttManager;
 import com.agrocontrol.app.mqtt.SensorData;
 import com.agrocontrol.app.widget.AgroWidget;
-import com.agrocontrol.app.utils.HumidityTracker;
-import com.agrocontrol.app.utils.PrefsManager;
 
 public class DashboardFragment extends Fragment implements MqttManager.MqttCallback {
 
@@ -40,7 +38,6 @@ public class DashboardFragment extends Fragment implements MqttManager.MqttCallb
 
     private int syncN = 0;
     private int saveCounter = 0;
-    private PrefsManager prefs;
 
     private float soil=0, temp=0, air=0, light=0;
     private int   tank=0;
@@ -63,7 +60,6 @@ public class DashboardFragment extends Fragment implements MqttManager.MqttCallb
         super.onViewCreated(v, savedInstanceState);
         bindViews(v);
         setupSwitches();
-        prefs = new PrefsManager(requireContext());
 
         SensorData last = MqttManager.getInstance().getLastData();
         if (last != null) {
@@ -88,9 +84,11 @@ public class DashboardFragment extends Fragment implements MqttManager.MqttCallb
         syncStateNow();
         startPeriodicSync();
 
-        // Restaurar timer si bomba sigue activa
+        // Restaurar timer con el tiempo real transcurrido
         if (MqttManager.getInstance().isPumpOn()) {
-            pumpSeconds = MqttManager.getInstance().getPumpElapsedSeconds();
+            int elapsed = MqttManager.getInstance().getPumpElapsedSeconds();
+            pumpSeconds = elapsed > 0 ? elapsed : 0;
+            pumpActive = false; // forzar re-init
             showPumpBanner(true, pumpSeconds);
             startPumpTimer();
         }
@@ -110,7 +108,9 @@ public class DashboardFragment extends Fragment implements MqttManager.MqttCallb
         if (show) {
             cardPumpActive.setVisibility(View.VISIBLE);
             pumpActive = true;
-            pumpSeconds = elapsedSeconds;
+            // Usar elapsed real del MqttManager si es mayor que el pasado
+            int elapsed = MqttManager.getInstance().getPumpElapsedSeconds();
+            pumpSeconds = Math.max(elapsedSeconds, elapsed > 0 ? elapsed : 0);
             updateTimerDisplay();
         } else {
             cardPumpActive.setVisibility(View.GONE);
@@ -340,7 +340,6 @@ public class DashboardFragment extends Fragment implements MqttManager.MqttCallb
                     updateEspStatus(true);
                     MqttManager.getInstance().setEspOnline(true);
                     cancelPingTimeout(); waitingForPing = false;
-                    HumidityTracker.getInstance().addReading(data.soil);
 
                     // Actualizar widget
                     if (getContext() != null)
@@ -351,7 +350,8 @@ public class DashboardFragment extends Fragment implements MqttManager.MqttCallb
                     // Mostrar/ocultar banner bomba según datos del sensor
                     boolean pumpOn = data.pump == 1;
                     if (pumpOn && !pumpActive) {
-                        pumpSeconds = MqttManager.getInstance().getPumpElapsedSeconds();
+                        int elapsed = MqttManager.getInstance().getPumpElapsedSeconds();
+                        pumpSeconds = elapsed > 0 ? elapsed : 0;
                         showPumpBanner(true, pumpSeconds);
                         startPumpTimer();
                     } else if (!pumpOn && pumpActive) {

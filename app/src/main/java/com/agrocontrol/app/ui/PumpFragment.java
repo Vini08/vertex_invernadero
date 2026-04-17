@@ -25,8 +25,8 @@ public class PumpFragment extends Fragment
     private static final String TAG = "PumpFragment";
 
     private LinearLayout pumpHeroBg;
-    private TextView tvSub, tvTimer, tvThresholdVal, tvAutoStatus, badgeAuto, tvMaxPumps;
-
+    private TextView tvSub, tvTimer, tvThresholdVal, tvAutoStatus, badgeAuto;
+    private TextView tvMaxPumps;
     private TextView tvRiegoCount, tvTiempoTotal, tvUltimoRiego, tvSchedBadge;
     private TextView tvDiasRiegos, tvDiasMinutos, tvDiasPromedio;
     private TextView tvSched1Time, tvSched1Duration;
@@ -45,7 +45,7 @@ public class PumpFragment extends Fragment
     private boolean isManualPump  = false;
     private int     seconds       = 0;
     private int     threshold     = 40;
-    private int     maxPumps      = 6;  // Límite diario configurable
+    private int     maxPumps      = 6;
     private float   currentSoil   = -1;
     private int     lastPumpsToday = -1;
 
@@ -78,9 +78,6 @@ public class PumpFragment extends Fragment
         tvAutoStatus    = v.findViewById(R.id.tv_auto_status);
         badgeAuto       = v.findViewById(R.id.badge_auto);
         tvMaxPumps      = v.findViewById(R.id.tv_max_pumps);
-
-        // Click en límite diario → NumberPicker
-        if (tvMaxPumps != null) tvMaxPumps.setOnClickListener(vv -> showMaxPumpsPicker());
         swSched1        = v.findViewById(R.id.sw_sched1);
         swSched2        = v.findViewById(R.id.sw_sched2);
         swSched3        = v.findViewById(R.id.sw_sched3);
@@ -100,6 +97,18 @@ public class PumpFragment extends Fragment
         tvSched3Time     = v.findViewById(R.id.tv_sched3_time);
         tvSched3Duration = v.findViewById(R.id.tv_sched3_duration);
 
+        // Cargar maxPumps con validacion — minimo 1
+        maxPumps = prefs.getMaxPumpsPerDay();
+        if (maxPumps < 1) {
+            maxPumps = 6;
+            prefs.setMaxPumpsPerDay(6);
+        }
+        if (tvMaxPumps != null) {
+            tvMaxPumps.setText(maxPumps + " riegos/dia");
+            tvMaxPumps.setOnClickListener(vv -> showMaxPumpsPicker());
+        }
+
+        // Cargar horarios
         sched1H = prefs.getSchedHour(1, 6);  sched1M = prefs.getSchedMin(1, 30); sched1Duration = prefs.getSchedDuration(1, 15);
         sched2H = prefs.getSchedHour(2, 18); sched2M = prefs.getSchedMin(2, 0);  sched2Duration = prefs.getSchedDuration(2, 10);
         sched3H = prefs.getSchedHour(3, 12); sched3M = prefs.getSchedMin(3, 0);  sched3Duration = prefs.getSchedDuration(3, 20);
@@ -112,6 +121,14 @@ public class PumpFragment extends Fragment
         if (tvSched2Duration != null) tvSched2Duration.setOnClickListener(vv -> showDurationPicker(2));
         if (tvSched3Duration != null) tvSched3Duration.setOnClickListener(vv -> showDurationPicker(3));
 
+        // Tambien hacer clickeables los contenedores de tiempo
+        View c1 = v.findViewById(R.id.tv_sched1_time_container);
+        View c2 = v.findViewById(R.id.tv_sched2_time_container);
+        View c3 = v.findViewById(R.id.tv_sched3_time_container);
+        if (c1 != null) c1.setOnClickListener(vv -> showTimePicker(1));
+        if (c2 != null) c2.setOnClickListener(vv -> showTimePicker(2));
+        if (c3 != null) c3.setOnClickListener(vv -> showTimePicker(3));
+
         swSched1.setChecked(prefs.isSchedEnabled(1));
         swSched2.setChecked(prefs.isSchedEnabled(2));
         swSched3.setChecked(prefs.isSchedEnabled(3));
@@ -120,9 +137,6 @@ public class PumpFragment extends Fragment
         threshold = prefs.getThreshold();
         seekThreshold.setProgress(threshold);
         tvThresholdVal.setText(threshold + "%");
-
-        maxPumps = prefs.getMaxPumpsPerDay();
-        if (tvMaxPumps != null) tvMaxPumps.setText(maxPumps + " riegos/día");
 
         syncPumpState(MqttManager.getInstance().isPumpOn());
         updateEspState(MqttManager.getInstance().isEspOnline());
@@ -137,36 +151,24 @@ public class PumpFragment extends Fragment
 
         swPump.setOnCheckedChangeListener((btn, isOn) -> {
             if (ignoreSwitch) return;
-
-            // Verificar MQTT conectado
             if (!MqttManager.getInstance().isConnected()) {
                 ignoreSwitch = true; swPump.setChecked(false); ignoreSwitch = false;
-                Toast.makeText(requireContext(), "⚠ Sin conexión MQTT", Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), "Sin conexion al broker", Toast.LENGTH_LONG).show();
                 return;
             }
-
-            // Verificar ESP online según watchdog
             if (isOn && !MqttManager.getInstance().isEspOnline()) {
                 ignoreSwitch = true; swPump.setChecked(false); ignoreSwitch = false;
-                Toast.makeText(requireContext(),
-                    "⚠ ESP desconectado — no se puede encender la bomba",
-                    Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), "ESP desconectado", Toast.LENGTH_LONG).show();
                 return;
             }
-
             isManualPump = true; pumpOn = isOn;
             boolean sent = MqttManager.getInstance().setPump(isOn);
-
             if (!sent) {
-                // setPump bloqueó (ESP offline según watchdog)
                 ignoreSwitch = true; swPump.setChecked(false); ignoreSwitch = false;
                 isManualPump = false; pumpOn = false;
-                Toast.makeText(requireContext(),
-                    "⚠ ESP no disponible — comando no enviado",
-                    Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), "ESP no disponible", Toast.LENGTH_LONG).show();
                 return;
             }
-
             updatePumpUI(isOn);
             if (isOn) { seconds = 0; startTimer(); }
             else { saveManualRiego(seconds); stopTimer(); isManualPump = false; }
@@ -189,20 +191,30 @@ public class PumpFragment extends Fragment
         });
     }
 
-    private void updateEspState(boolean online) {
-        if (swPump == null) return;
-        if (online) {
-            swPump.setAlpha(1.0f);
-            tvSub.setText(pumpOn ? "Encendida · Activa · 110V" : "Apagada · 110V / 50 PSI");
-        } else {
-            swPump.setAlpha(0.4f);
-            if (!pumpOn) tvSub.setText("⚠ ESP desconectado — bomba inactiva");
-        }
+    // ─── Limite diario picker ─────────────────────────────────────────────────
+    private void showMaxPumpsPicker() {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(requireContext());
+        builder.setTitle("Limite diario de riegos automaticos");
+        NumberPicker np = new NumberPicker(requireContext());
+        np.setMinValue(1); np.setMaxValue(50); np.setValue(maxPumps);
+        np.setWrapSelectorWheel(false);
+        builder.setView(np);
+        builder.setPositiveButton("Guardar", (dialog, which) -> {
+            maxPumps = np.getValue();
+            prefs.setMaxPumpsPerDay(maxPumps);
+            MqttManager.getInstance().setMaxPumpsPerDay(maxPumps);
+            if (tvMaxPumps != null) tvMaxPumps.setText(maxPumps + " riegos/dia");
+            Toast.makeText(requireContext(), "Limite: " + maxPumps + " riegos/dia", Toast.LENGTH_SHORT).show();
+        });
+        builder.setNegativeButton("Cancelar", null);
+        builder.show();
     }
 
+    // ─── Cronometro ───────────────────────────────────────────────────────────
     private void syncPumpState(boolean isOn) {
         ignoreSwitch = true; swPump.setChecked(isOn); ignoreSwitch = false;
-        boolean wasOn = pumpOn; pumpOn = isOn; updatePumpUI(isOn);
+        pumpOn = isOn;
+        updatePumpUI(isOn);
         if (isOn) {
             int elapsed = MqttManager.getInstance().getPumpElapsedSeconds();
             seconds = (elapsed > 0 && elapsed < 1800) ? elapsed : 0;
@@ -218,7 +230,9 @@ public class PumpFragment extends Fragment
         timerRunnable = new Runnable() {
             @Override public void run() {
                 if (!isAdded() || !pumpOn) return;
-                seconds++;
+                // Usar tiempo real del MqttManager
+                int realElapsed = MqttManager.getInstance().getPumpElapsedSeconds();
+                seconds = realElapsed > 0 ? realElapsed : seconds + 1;
                 tvTimer.setText(String.format("%02d:%02d", seconds / 60, seconds % 60));
                 timerHandler.postDelayed(this, 1000);
             }
@@ -236,9 +250,10 @@ public class PumpFragment extends Fragment
         if (tvTimer != null) tvTimer.setText("00:00");
     }
 
+    // ─── Horarios ─────────────────────────────────────────────────────────────
     private void showTimePicker(int num) {
-        int h = num==1?sched1H:num==2?sched2H:sched3H;
-        int m = num==1?sched1M:num==2?sched2M:sched3M;
+        int h = num==1 ? sched1H : num==2 ? sched2H : sched3H;
+        int m = num==1 ? sched1M : num==2 ? sched2M : sched3M;
         new TimePickerDialog(requireContext(), (view, hour, minute) -> {
             if (num==1)      { sched1H=hour; sched1M=minute; prefs.setSchedHour(1,hour); prefs.setSchedMin(1,minute); }
             else if (num==2) { sched2H=hour; sched2M=minute; prefs.setSchedHour(2,hour); prefs.setSchedMin(2,minute); }
@@ -249,9 +264,9 @@ public class PumpFragment extends Fragment
     }
 
     private void showDurationPicker(int num) {
-        int current = num==1?sched1Duration:num==2?sched2Duration:sched3Duration;
+        int current = num==1 ? sched1Duration : num==2 ? sched2Duration : sched3Duration;
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(requireContext());
-        builder.setTitle("Duración riego " + num + " (minutos)");
+        builder.setTitle("Duracion riego " + num + " (minutos)");
         NumberPicker np = new NumberPicker(requireContext());
         np.setMinValue(1); np.setMaxValue(60); np.setValue(current); np.setWrapSelectorWheel(false);
         builder.setView(np);
@@ -261,18 +276,26 @@ public class PumpFragment extends Fragment
             else if (num==2) { sched2Duration=val; prefs.setSchedDuration(2,val); }
             else             { sched3Duration=val; prefs.setSchedDuration(3,val); }
             updateSchedViews(); sendSchedule();
-            Toast.makeText(requireContext(), "Duración: " + val + " min", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Duracion: " + val + " min", Toast.LENGTH_SHORT).show();
         });
-        builder.setNegativeButton("Cancelar", null).show();
+        builder.setNegativeButton("Cancelar", null);
+        builder.show();
     }
 
     private void updateSchedViews() {
-        if (tvSched1Time!=null) tvSched1Time.setText(String.format("%02d:%02d",sched1H,sched1M));
-        if (tvSched1Duration!=null) tvSched1Duration.setText(sched1Duration+" min");
-        if (tvSched2Time!=null) tvSched2Time.setText(String.format("%02d:%02d",sched2H,sched2M));
-        if (tvSched2Duration!=null) tvSched2Duration.setText(sched2Duration+" min");
-        if (tvSched3Time!=null) tvSched3Time.setText(String.format("%02d:%02d",sched3H,sched3M));
-        if (tvSched3Duration!=null) tvSched3Duration.setText(sched3Duration+" min");
+        if (tvSched1Time != null) tvSched1Time.setText(String.format("%02d:%02d", sched1H, sched1M));
+        if (tvSched1Duration != null) tvSched1Duration.setText(sched1Duration + " min");
+        if (tvSched2Time != null) tvSched2Time.setText(String.format("%02d:%02d", sched2H, sched2M));
+        if (tvSched2Duration != null) tvSched2Duration.setText(sched2Duration + " min");
+        if (tvSched3Time != null) tvSched3Time.setText(String.format("%02d:%02d", sched3H, sched3M));
+        if (tvSched3Duration != null) tvSched3Duration.setText(sched3Duration + " min");
+    }
+
+    private void updateEspState(boolean online) {
+        if (swPump == null) return;
+        swPump.setAlpha(online ? 1.0f : 0.4f);
+        if (!online && !pumpOn) tvSub.setText("ESP desconectado");
+        else tvSub.setText(pumpOn ? "Encendida · Activa · 110V" : "Apagada · 110V / 50 PSI");
     }
 
     private void saveManualRiego(int totalSeg) {
@@ -280,7 +303,7 @@ public class PumpFragment extends Fragment
         java.util.Calendar cal = java.util.Calendar.getInstance();
         String hora = String.format("%02d:%02d", cal.get(java.util.Calendar.HOUR_OF_DAY), cal.get(java.util.Calendar.MINUTE));
         int min = totalSeg/60, seg = totalSeg%60;
-        String duracion = min + ":" + (seg<10?"0":"") + seg;
+        String duracion = min + ":" + (seg < 10 ? "0" : "") + seg;
         RiegoRecord r = new RiegoRecord(hora, duracion, "MANUAL", currentSoil < 0 ? 0 : currentSoil);
         RiegoManager.getInstance().addRiego(r);
     }
@@ -292,6 +315,7 @@ public class PumpFragment extends Fragment
                 if (!isAdded()) return;
                 RiegoManager rm = RiegoManager.getInstance();
                 rm.clear();
+                // BD devuelve DESC — no invertir para que get(0) sea el mas reciente
                 for (RiegoRecord r : riegos) rm.getRiegos().add(r);
                 refreshSummary(); loadResumenDias();
             },
@@ -300,24 +324,26 @@ public class PumpFragment extends Fragment
     }
 
     private void navigateToRiegos(int days) {
-        if (getActivity()==null) return;
+        if (getActivity() == null) return;
         HistoryFragment h = new HistoryFragment();
-        Bundle args = new Bundle(); args.putBoolean("show_riegos",true); args.putInt("days",days);
+        Bundle args = new Bundle();
+        args.putBoolean("show_riegos", true); args.putInt("days", days);
         h.setArguments(args);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,h).commit();
+        getActivity().getSupportFragmentManager().beginTransaction()
+            .replace(R.id.fragment_container, h).commit();
         BottomNavigationView nav = getActivity().findViewById(R.id.bottom_nav);
-        if (nav!=null) nav.getMenu().findItem(R.id.nav_history).setChecked(true);
+        if (nav != null) nav.getMenu().findItem(R.id.nav_history).setChecked(true);
     }
 
     private void loadResumenDias() {
         ApiManager.getInstance().getRiegos(7,
             (riegos, totalMin) -> {
-                if (!isAdded()||tvDiasRiegos==null) return;
+                if (!isAdded() || tvDiasRiegos == null) return;
                 tvDiasRiegos.setText(String.valueOf(riegos.size()));
-                tvDiasMinutos.setText(totalMin+"m");
-                tvDiasPromedio.setText(Math.round((float)riegos.size()/7f)+"/día");
+                tvDiasMinutos.setText(totalMin + "m");
+                tvDiasPromedio.setText(Math.round((float)riegos.size()/7f) + "/dia");
             },
-            err -> { if (!isAdded()||tvDiasRiegos==null) return;
+            err -> { if (!isAdded() || tvDiasRiegos == null) return;
                 tvDiasRiegos.setText("--"); tvDiasMinutos.setText("--"); tvDiasPromedio.setText("--"); }
         );
     }
@@ -327,30 +353,32 @@ public class PumpFragment extends Fragment
     }
 
     private void refreshSummary() {
-        if (tvRiegoCount==null||!isAdded()) return;
+        if (tvRiegoCount == null || !isAdded()) return;
         RiegoManager rm = RiegoManager.getInstance();
         tvRiegoCount.setText(String.valueOf(rm.getCount()));
-        tvTiempoTotal.setText(rm.getTotalMinutes()+"m");
+        tvTiempoTotal.setText(rm.getTotalMinutes() + "m");
         tvUltimoRiego.setText(rm.getLastHora());
     }
 
     private void updatePumpUI(boolean isOn) {
-        if (pumpHeroBg==null) return;
+        if (pumpHeroBg == null) return;
         pumpHeroBg.setBackgroundResource(isOn ? R.drawable.bg_hero_on : R.drawable.bg_hero_off);
         tvSub.setText(isOn ? "Encendida · Activa · 110V" : "Apagada · 110V / 50 PSI");
     }
 
     @Override public void onConnected() {
-        mainHandler.post(() -> { if (isAdded()) swPump.setAlpha(1.0f); });
+        mainHandler.post(() -> { if (isAdded() && !pumpOn) stopTimer(); });
     }
+
     @Override public void onDisconnected() {
         mainHandler.post(() -> {
             if (!isAdded()) return;
-            pumpOn=false; stopTimer();
-            ignoreSwitch=true; swPump.setChecked(false); ignoreSwitch=false;
-            updatePumpUI(false); swPump.setAlpha(0.4f);
+            pumpOn = false; stopTimer();
+            ignoreSwitch = true; swPump.setChecked(false); ignoreSwitch = false;
+            updatePumpUI(false);
         });
     }
+
     @Override public void onError(String e) {}
 
     @Override
@@ -363,13 +391,8 @@ public class PumpFragment extends Fragment
                 MqttManager.getInstance().setEspOnline(online);
                 updateEspState(online);
                 if (!online) {
-                    // ESP offline — apagar bomba en la UI
-                    if (pumpOn) {
-                        pumpOn=false; stopTimer();
-                        ignoreSwitch=true; swPump.setChecked(false); ignoreSwitch=false;
-                        updatePumpUI(false);
-                        Toast.makeText(requireContext(), "📡 ESP desconectado", Toast.LENGTH_SHORT).show();
-                    }
+                    pumpOn = false; stopTimer();
+                    ignoreSwitch = true; swPump.setChecked(false); ignoreSwitch = false;
                 } else reloadFromApi();
                 return;
             }
@@ -377,27 +400,33 @@ public class PumpFragment extends Fragment
             if (topic.equals(MqttManager.TOPIC_SENSORS)) {
                 SensorData data = SensorData.fromJson(payload);
                 if (data.isValid()) {
-                    currentSoil=data.soil; updateAutoStatus();
-                    if (lastPumpsToday>0 && data.pumpsToday<lastPumpsToday) {
-                        lastPumpsToday=data.pumpsToday; reloadFromApi(); return;
+                    currentSoil = data.soil; updateAutoStatus();
+                    // Actualizar limite diario si cambio en el ESP
+                    if (data.maxPumpsPerDay  > 0 && data.maxPumpsPerDay  != maxPumps) {
+                        maxPumps = data.maxPumpsPerDay ;
+                        prefs.setMaxPumpsPerDay(maxPumps);
+                        if (tvMaxPumps != null) tvMaxPumps.setText(maxPumps + " riegos/dia");
                     }
-                    lastPumpsToday=data.pumpsToday;
+                    if (lastPumpsToday > 0 && data.pumpsToday < lastPumpsToday) {
+                        lastPumpsToday = data.pumpsToday; reloadFromApi(); return;
+                    }
+                    lastPumpsToday = data.pumpsToday;
                     if (!isManualPump) {
-                        boolean espOn = data.pump==1;
-                        if (espOn!=pumpOn) syncPumpState(espOn);
+                        boolean espOn = data.pump == 1;
+                        if (espOn != pumpOn) syncPumpState(espOn);
                     }
                 }
                 return;
             }
 
             if (topic.equals(MqttManager.TOPIC_PUMP_STATE)) {
-                boolean isOn = payload.equals("ON")||payload.equals("ON_AUTO")||payload.equals("ON_SCHED");
-                if (!isManualPump && isOn!=pumpOn) {
+                boolean isOn = payload.equals("ON") || payload.equals("ON_AUTO") || payload.equals("ON_SCHED");
+                if (!isManualPump && isOn != pumpOn) {
                     syncPumpState(isOn);
                     if (isOn && payload.equals("ON_AUTO"))
-                        Toast.makeText(requireContext(), "💧 Auto-riego activado", Toast.LENGTH_LONG).show();
+                        Toast.makeText(requireContext(), "Auto-riego activado", Toast.LENGTH_LONG).show();
                     else if (!isOn && payload.contains("OFF"))
-                        Toast.makeText(requireContext(), "✓ Riego completado", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Riego completado", Toast.LENGTH_SHORT).show();
                 }
                 return;
             }
@@ -409,50 +438,36 @@ public class PumpFragment extends Fragment
     }
 
     private void updateSchedBadge() {
-        int a=0;
-        if (swSched1!=null&&swSched1.isChecked()) a++;
-        if (swSched2!=null&&swSched2.isChecked()) a++;
-        if (swSched3!=null&&swSched3.isChecked()) a++;
-        tvSchedBadge.setText(a+(a==1?" activo":" activos"));
-        if (a==0) { tvSchedBadge.setTextColor(getResources().getColor(R.color.colorTextSecondary,null)); tvSchedBadge.setBackgroundResource(R.drawable.bg_schedule_time); }
-        else      { tvSchedBadge.setTextColor(getResources().getColor(R.color.chipInfoText,null));       tvSchedBadge.setBackgroundResource(R.drawable.bg_chip_info); }
-    }
-
-    private void showMaxPumpsPicker() {
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(requireContext());
-        builder.setTitle("Límite diario de riegos automáticos");
-        android.widget.NumberPicker np = new android.widget.NumberPicker(requireContext());
-        np.setMinValue(1); np.setMaxValue(50); np.setValue(maxPumps);
-        np.setWrapSelectorWheel(false);
-        builder.setView(np);
-        builder.setPositiveButton("Guardar", (dialog, which) -> {
-            maxPumps = np.getValue();
-            prefs.setMaxPumpsPerDay(maxPumps);
-            MqttManager.getInstance().setMaxPumpsPerDay(maxPumps);
-            if (tvMaxPumps != null) tvMaxPumps.setText(maxPumps + " riegos/día");
-            Toast.makeText(requireContext(),
-                "Límite guardado: " + maxPumps + " riegos/día", Toast.LENGTH_SHORT).show();
-        });
-        builder.setNegativeButton("Cancelar", null);
-        builder.show();
+        int a = 0;
+        if (swSched1!=null && swSched1.isChecked()) a++;
+        if (swSched2!=null && swSched2.isChecked()) a++;
+        if (swSched3!=null && swSched3.isChecked()) a++;
+        tvSchedBadge.setText(a + (a==1 ? " activo" : " activos"));
+        if (a==0) {
+            tvSchedBadge.setTextColor(getResources().getColor(R.color.colorTextSecondary,null));
+            tvSchedBadge.setBackgroundResource(R.drawable.bg_schedule_time);
+        } else {
+            tvSchedBadge.setTextColor(getResources().getColor(R.color.chipInfoText,null));
+            tvSchedBadge.setBackgroundResource(R.drawable.bg_chip_info);
+        }
     }
 
     private void updateAutoStatus() {
-        if (currentSoil<0) {
+        if (currentSoil < 0) {
             tvAutoStatus.setText("Esperando datos...");
             tvAutoStatus.setTextColor(getResources().getColor(R.color.colorTextSecondary,null));
             badgeAuto.setText("Sin datos"); badgeAuto.setBackgroundResource(R.drawable.bg_schedule_time);
             return;
         }
-        int soil=(int)currentSoil;
-        if (soil<threshold) {
-            tvAutoStatus.setText("⚠ Humedad "+soil+"% — bomba se activará");
+        int soil = (int)currentSoil;
+        if (soil < threshold) {
+            tvAutoStatus.setText("Humedad " + soil + "% — bomba se activara");
             tvAutoStatus.setTextColor(getResources().getColor(R.color.chipWarnText,null));
-            badgeAuto.setText("Activará bomba");
+            badgeAuto.setText("Activara bomba");
             badgeAuto.setTextColor(getResources().getColor(R.color.chipWarnText,null));
             badgeAuto.setBackgroundResource(R.drawable.bg_chip_warn);
         } else {
-            tvAutoStatus.setText("✓ Humedad "+soil+"% — bomba no se activará");
+            tvAutoStatus.setText("Humedad " + soil + "% — bomba no se activara");
             tvAutoStatus.setTextColor(getResources().getColor(R.color.chipOkText,null));
             badgeAuto.setText("Activo");
             badgeAuto.setTextColor(getResources().getColor(R.color.chipOkText,null));
@@ -463,9 +478,9 @@ public class PumpFragment extends Fragment
     private void sendSchedule() {
         try {
             org.json.JSONObject j = new org.json.JSONObject();
-            org.json.JSONObject s1=new org.json.JSONObject(); s1.put("enabled",swSched1.isChecked()); s1.put("hour",sched1H); s1.put("min",sched1M); s1.put("duration",sched1Duration); j.put("s1",s1);
-            org.json.JSONObject s2=new org.json.JSONObject(); s2.put("enabled",swSched2.isChecked()); s2.put("hour",sched2H); s2.put("min",sched2M); s2.put("duration",sched2Duration); j.put("s2",s2);
-            org.json.JSONObject s3=new org.json.JSONObject(); s3.put("enabled",swSched3.isChecked()); s3.put("hour",sched3H); s3.put("min",sched3M); s3.put("duration",sched3Duration); j.put("s3",s3);
+            org.json.JSONObject s1 = new org.json.JSONObject(); s1.put("enabled",swSched1.isChecked()); s1.put("hour",sched1H); s1.put("min",sched1M); s1.put("duration",sched1Duration); j.put("s1",s1);
+            org.json.JSONObject s2 = new org.json.JSONObject(); s2.put("enabled",swSched2.isChecked()); s2.put("hour",sched2H); s2.put("min",sched2M); s2.put("duration",sched2Duration); j.put("s2",s2);
+            org.json.JSONObject s3 = new org.json.JSONObject(); s3.put("enabled",swSched3.isChecked()); s3.put("hour",sched3H); s3.put("min",sched3M); s3.put("duration",sched3Duration); j.put("s3",s3);
             MqttManager.getInstance().publish("home/schedule", j.toString());
         } catch (Exception e) { e.printStackTrace(); }
     }
@@ -474,10 +489,14 @@ public class PumpFragment extends Fragment
         super.onResume();
         MqttManager.getInstance().addCallback(this);
         RiegoManager.getInstance().setListener(this);
+        // Recargar maxPumps con validacion
+        maxPumps = prefs.getMaxPumpsPerDay();
+        if (maxPumps < 1) { maxPumps = 6; prefs.setMaxPumpsPerDay(6); }
+        if (tvMaxPumps != null) tvMaxPumps.setText(maxPumps + " riegos/dia");
         syncPumpState(MqttManager.getInstance().isPumpOn());
         updateEspState(MqttManager.getInstance().isEspOnline());
         float ls = MqttManager.getInstance().getLastSoilHumidity();
-        if (ls>=0) { currentSoil=ls; updateAutoStatus(); }
+        if (ls >= 0) { currentSoil = ls; updateAutoStatus(); }
         reloadFromApi();
     }
 
